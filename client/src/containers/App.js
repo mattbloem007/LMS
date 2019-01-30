@@ -32,7 +32,7 @@ import ModeratorTable from '../components/ModeratorTable';
 import AssessorTable from '../components/AssessorTable';
 //import Steps from '../components/Steps';
 import ExistingProjects from '../components/ExistingProjects';
-//import AddProgrammes from '../components/addProgrammes'
+import AddProgrammes from '../components/addProgrammes'
 import { days, months } from '../common';
 
 const style1 = {
@@ -137,9 +137,9 @@ class App extends Component {
       case "Existing Projects":
         segment = (<ExistingProjects info={this.props.response}/>)
       break;
-      // case "Add Programmes":
-      //   segment = (<AddProgrammes />)
-      // break;
+      case "Add Programmes":
+        segment = (<AddProgrammes />)
+      break;
       case "Learners":
         switch (this.props.activeStep) {
 

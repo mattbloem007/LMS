@@ -334,7 +334,7 @@ export const validateInput1 = (info, errs) => {
     let moderators = "";
     let assessors = "";
 
-    if (state.batch.type != "edit-c") {
+    if (info.facilitator instanceof Array || info.assessor instanceof Array || info.moderator instanceof Array) {
 
       for (let i = 0; i < info.facilitator.length; i++) {
         if (i == info.facilitator.length - 1) {
@@ -364,6 +364,12 @@ export const validateInput1 = (info, errs) => {
         }
       }
     }
+    else {
+      facilitators = info.facilitator
+      assessors = info.assessor
+      moderators = info.moderator
+    }
+
 
 
     let assessment_date = "";

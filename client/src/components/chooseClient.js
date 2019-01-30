@@ -52,32 +52,32 @@ const initState = {
 
 class Client extends Component {
 
-  constructor() {
-      super();
+  constructor(props) {
+      super(props);
       this.state = {
           success: false,
           save: false,
-          batch_no: "",
-          day: "",
-          month: "",
-          year: "",
-          aday: "",
-          amonth: "",
-          ayear: "",
-          mday: "",
-          mmonth: "",
-          myear: "",
-          endday: "",
-          endmonth: "",
-          endyear: "",
-          client_name: "",
-          project: "",
-          venue: "",
-          programme_name: "",
-          credit: "",
+          batch_no: props.batch_no,
+          day: props.day,
+          month: props.month,
+          year: props.year,
+          aday: props.aday,
+          amonth: props.amonth,
+          ayear: props.ayear,
+          mday: props.mday,
+          mmonth: props.mmonth,
+          myear: props.myear,
+          endday: props.endday,
+          endmonth: props.endmonth,
+          endyear: props.endyear,
+          client_name: props.client_name,
+          project: props.project,
+          venue: props.venue,
+          programme_name: props.programme_name,
+          credit: props.credit,
           creditStatus: false,
           facilitator: "",
-          programmeType: "",
+          programmeType: props.programmeType,
           qpms: [],
           spms: [],
           us: "",
@@ -93,6 +93,7 @@ class Client extends Component {
   }
 
   componentDidMount() {
+    console.log("Here: ", this.state.credit)
     this.props.clientActions.fetchClients();
     this.props.learnerActions.fetchFacilitator();
     this.props.learnerActions.fetchAssessor();
@@ -343,7 +344,7 @@ const mapStateToProps = state => ({
   venue: state.batch.venue,
   errors: state.client.errors,
   programmeOptions: state.programme.programmeOptions,
-  credit: state.programme.credit,
+  credit: state.batch.credit,
   facilitators: state.programme.facilitators,
   assessors: state.programme.assessors,
   moderators: state.programme.moderators,
@@ -356,7 +357,7 @@ const mapStateToProps = state => ({
   facilitator: state.batch.facilitator,
   assessor: state.batch.assessor,
   moderator: state.batch.moderator,
-  creditStatus: state.programme.creditStatus,
+  creditStatus: state.batch.creditStatus,
   programmeType: state.batch.programmeType,
   success: state.client.success,
   saved: state.client.saved,

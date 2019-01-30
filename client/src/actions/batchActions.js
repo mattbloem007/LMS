@@ -43,7 +43,6 @@ export const editBatch = (batch) => {
     return Promise.resolve()
   }
 }
-
 export const edit = (batch) => ({type: EDIT_BATCH, payload: batch})
 
 export function receiveInfo(json) {

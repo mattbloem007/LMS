@@ -2225,6 +2225,16 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
+csv-headers@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/csv-headers/-/csv-headers-1.0.0.tgz#7198f5c2bdbf5772776e313ac3194b4a9e1d9427"
+  dependencies:
+    line-by-line ""
+
+csv-parse@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.3.1.tgz#b2b92a4068106d6713952050593b2be06ec1a577"
+
 cubic2quad@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/cubic2quad/-/cubic2quad-1.1.1.tgz#69b19c61a3f5b41ecf2f1d5fae8fb03415aa8b15"
@@ -4960,6 +4970,10 @@ lead@^1.0.0:
   dependencies:
     flush-write-stream "^1.0.2"
 
+leftpad@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/leftpad/-/leftpad-0.0.1.tgz#86b1a4de4face180ac545a83f1503523d8fed115"
+
 level-blobs@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/level-blobs/-/level-blobs-0.1.7.tgz#9ab9b97bb99f1edbf9f78a3433e21ed56386bdaf"
@@ -5059,6 +5073,10 @@ liftoff@^2.5.0:
     object.map "^1.0.0"
     rechoir "^0.6.2"
     resolve "^1.1.7"
+
+line-by-line@:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/line-by-line/-/line-by-line-0.1.6.tgz#6236edd1db2d1695addf11f0268e74a181561c30"
 
 linebreak@^0.3.0:
   version "0.3.0"
