@@ -13,7 +13,7 @@ const programmeState = {
   facilitatorError: false,
   programmeTypeError: false,
   errors: true,
-  credit: "non-credit",
+  credit: "",
   creditStatus: false,
   facilitator: "",
   programme_name: "",

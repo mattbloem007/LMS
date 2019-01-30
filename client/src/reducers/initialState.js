@@ -12,6 +12,7 @@ export default {
                              {id: 4, text: "Facilitators"},
                              {id: 5, text: "Moderators"},
                              {id: 6, text: "Assessors"},
+                          //   {id: 7, text: "Add Programmes"}
                            ],
                  users: [],
                  response: []

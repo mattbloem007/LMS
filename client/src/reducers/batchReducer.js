@@ -19,7 +19,7 @@ const batchState = {
   endmonth: "",
   endyear: "",
   enddate: "",
-  credit: "non-credit",
+  credit: "",
   facilitator: [],
   moderator: [],
   assessor: [],

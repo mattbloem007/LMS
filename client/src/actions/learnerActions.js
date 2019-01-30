@@ -310,7 +310,7 @@ export const validateInput = (info, errs) => {
         }
       break;
       case "Passport":
-        if (info.national_id.length != 6 ||!isNumeric(info.national_id)) {
+        if (info.national_id.length < 6) {
           errs = {...errs, idError: true}
         }
         else {
@@ -432,12 +432,12 @@ export const validateInput = (info, errs) => {
     //   errs = {...errs, postCode2Error: false}
     // }
 
-    if(!isMobilePhone(info.homeno)){
-      errs = {...errs, homenoError: true}
-    }
-    else {
-      errs = {...errs, homenoError: false}
-    }
+    // if(!isMobilePhone(info.homeno)){
+    //   errs = {...errs, homenoError: true}
+    // }
+    // else {
+    //   errs = {...errs, homenoError: false}
+    // }
 
     if(!isMobilePhone(info.cellno)){
       errs = {...errs, cellnoError: true}

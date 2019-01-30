@@ -116,6 +116,7 @@ class Client extends Component {
 
 
   validateInput = (e) => {
+
     this.props.clientActions.updateBatchClient(this.state, true)
     .then(() => {
       console.log("SUCCESS?" + this.props.success)
@@ -125,13 +126,13 @@ class Client extends Component {
       if(this.props.type == "edit-c") {
         this.props.tableActions.changeActiveTable("batch")
       }
-      this.props.clientActions.reload(true)
+     this.props.clientActions.reload(true)
       .then(() => {
         this.props.clientActions.fetchClients();
         this.props.learnerActions.fetchFacilitator();
         this.props.learnerActions.fetchAssessor();
         this.props.learnerActions.fetchModerator();
-      })
+     })
     })
 
   //  this.props.clientActions.validateInput1(this.state)
