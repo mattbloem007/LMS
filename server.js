@@ -29,110 +29,112 @@ app.use(json2xls.middleware);
 //   })
 // })
 
-new Promise((resolve, reject) => {
-    csvHeaders({
-        file      : csvfn,
-        delimiter : ','
-    }, function(err, headers) {
-        if (err) reject(err);
-        else resolve({ headers });
-    });
-})
-.then(context => {
-    return new Promise((resolve, reject) => {
+app.get('/saveProgramme', function(req, res) {
+  new Promise((resolve, reject) => {
+      csvHeaders({
+          file      : csvfn,
+          delimiter : ','
+      }, function(err, headers) {
+          if (err) reject(err);
+          else resolve({ headers });
+      });
+  })
+  .then(context => {
+      return new Promise((resolve, reject) => {
 
-        context.db = mysql.createConnection({
-          host     : '41.185.8.125',
-          user     : 'xiconco1_mikeb',
-          password : 'X4k474ssPz',
-          database : 'xiconco1_lms'
-        });
+          context.db = mysql.createConnection({
+            host     : '41.185.8.125',
+            user     : 'xiconco1_mikeb',
+            password : 'X4k474ssPz',
+            database : 'xiconco1_lms'
+          });
 
-        context.db.connect((err) => {
-            if (err) {
-                console.error('error connecting: ' + err.stack);
-                reject(err);
-            } else {
-                resolve(context);
-            }
-        });
-    })
+          context.db.connect((err) => {
+              if (err) {
+                  console.error('error connecting: ' + err.stack);
+                  reject(err);
+              } else {
+                  resolve(context);
+              }
+          });
+      })
+  })
+  // .then(context => {
+  //     return new Promise((resolve, reject) => {
+  //         context.db.query(`DROP TABLE IF EXISTS ${tblnm}`,
+  //         [ ],
+  //         err => {
+  //             if (err) reject(err);
+  //             else resolve(context);
+  //         })
+  //     });
+  // })
+  .then(context => {
+      return new Promise((resolve, reject) => {
+          var fields = '';
+          var fieldnms = '';
+          var qs = '';
+          context.headers.forEach(hdr => {
+              hdr = hdr.replace(' ', '_');
+              if (fields !== '') fields += ',';
+              if (fieldnms !== '') fieldnms += ','
+              if (qs !== '') qs += ',';
+              fields += ` ${hdr} TEXT`;
+              fieldnms += ` ${hdr}`;
+              qs += ' ?';
+          });
+          context.qs = qs;
+          context.fieldnms = fieldnms;
+          console.log(`about to create CREATE TABLE IF NOT EXISTS ${tblnm} ( ${fields} )`);
+          context.db.query(`CREATE TABLE IF NOT EXISTS ${tblnm} ( ${fields} )`,
+          [ ],
+          err => {
+              if (err) reject(err);
+              else resolve(context);
+          })
+      });
+  })
+  .then(context => {
+      return new Promise((resolve, reject) => {
+          fs.createReadStream(csvfn).pipe(parse({
+              delimiter: ',',
+              columns: true,
+              relax_column_count: true
+          }, (err, data) => {
+              if (err) return reject(err);
+              async.eachSeries(data, (datum, next) => {
+                  // console.log(`about to run INSERT INTO ${tblnm} ( ${context.fieldnms} ) VALUES ( ${context.qs} )`);
+                  var d = [];
+                  try {
+                      context.headers.forEach(hdr => {
+                          // In some cases the data fields have embedded blanks,
+                          // which must be trimmed off
+                          let tp = datum[hdr].trim();
+                          // For a field with an empty string, send NULL instead
+                          d.push(tp === '' ? null : tp);
+                      });
+                  } catch (e) {
+                      console.error(e.stack);
+                  }
+                  // console.log(`${d.length}: ${util.inspect(d)}`);
+                  if (d.length > 0) {
+                      context.db.query(`INSERT INTO ${tblnm} ( ${context.fieldnms} ) VALUES ( ${context.qs} )`, d,
+                      err => {
+                          if (err) { console.error(err); next(err); }
+                          else setTimeout(() => { next(); });
+                      });
+                  } else { console.log(`empty row ${util.inspect(datum)} ${util.inspect(d)}`); next(); }
+              },
+              err => {
+                  if (err) reject(err);
+                  else resolve(context);
+              });
+          }));
+      });
+  })
+  .then(context => { context.db.end(); })
+  .catch(err => { console.error(err.stack); });
 })
-// .then(context => {
-//     return new Promise((resolve, reject) => {
-//         context.db.query(`DROP TABLE IF EXISTS ${tblnm}`,
-//         [ ],
-//         err => {
-//             if (err) reject(err);
-//             else resolve(context);
-//         })
-//     });
-// })
-.then(context => {
-    return new Promise((resolve, reject) => {
-        var fields = '';
-        var fieldnms = '';
-        var qs = '';
-        context.headers.forEach(hdr => {
-            hdr = hdr.replace(' ', '_');
-            if (fields !== '') fields += ',';
-            if (fieldnms !== '') fieldnms += ','
-            if (qs !== '') qs += ',';
-            fields += ` ${hdr} TEXT`;
-            fieldnms += ` ${hdr}`;
-            qs += ' ?';
-        });
-        context.qs = qs;
-        context.fieldnms = fieldnms;
-        console.log(`about to create CREATE TABLE IF NOT EXISTS ${tblnm} ( ${fields} )`);
-        context.db.query(`CREATE TABLE IF NOT EXISTS ${tblnm} ( ${fields} )`,
-        [ ],
-        err => {
-            if (err) reject(err);
-            else resolve(context);
-        })
-    });
-})
-.then(context => {
-    return new Promise((resolve, reject) => {
-        fs.createReadStream(csvfn).pipe(parse({
-            delimiter: ',',
-            columns: true,
-            relax_column_count: true
-        }, (err, data) => {
-            if (err) return reject(err);
-            async.eachSeries(data, (datum, next) => {
-                // console.log(`about to run INSERT INTO ${tblnm} ( ${context.fieldnms} ) VALUES ( ${context.qs} )`);
-                var d = [];
-                try {
-                    context.headers.forEach(hdr => {
-                        // In some cases the data fields have embedded blanks,
-                        // which must be trimmed off
-                        let tp = datum[hdr].trim();
-                        // For a field with an empty string, send NULL instead
-                        d.push(tp === '' ? null : tp);
-                    });
-                } catch (e) {
-                    console.error(e.stack);
-                }
-                // console.log(`${d.length}: ${util.inspect(d)}`);
-                if (d.length > 0) {
-                    context.db.query(`INSERT INTO ${tblnm} ( ${context.fieldnms} ) VALUES ( ${context.qs} )`, d,
-                    err => {
-                        if (err) { console.error(err); next(err); }
-                        else setTimeout(() => { next(); });
-                    });
-                } else { console.log(`empty row ${util.inspect(datum)} ${util.inspect(d)}`); next(); }
-            },
-            err => {
-                if (err) reject(err);
-                else resolve(context);
-            });
-        }));
-    });
-})
-.then(context => { context.db.end(); })
-.catch(err => { console.error(err.stack); });
 
 
 app.post('/save',function(req, res) {
@@ -602,14 +604,15 @@ app.post('/api/deleteBatchLearners', (req, res) => {
     console.log("connection made");
 
     let jsondata = req.body;
-    var values = [];
+    console.log(req.body)
+    var ids = [];
+    var batch = [];
     for(var i in jsondata){
-        for(var x in jsondata[i]) {
-          values.push(jsondata[i][x])
-        }
-        console.log(values)
-      }
-    connection.query('DELETE FROM `lms_learner_batch` WHERE `learner_ID`=? AND `batch_no`=?', [values[0], values[1]], function(err, rows, fields) {
+      ids.push(jsondata[i].id)
+      batch.push(jsondata[i].batch)        
+    }
+      console.log(ids, batch)
+    connection.query('DELETE FROM `lms_learner_batch` WHERE `learner_ID` IN (?) AND `batch_no` IN (?)', [ids, batch], function(err, rows, fields) {
 
       if (err) throw err;
 
@@ -731,7 +734,7 @@ app.post('/api/learner_batch2', (req, res) => {
 
     let jsondata = req.body;
     console.log(jsondata)
-    connection.query('SELECT * FROM `lms_learner` WHERE national_id = ?', [jsondata.ID], function(err, rows, fields) {
+    connection.query('SELECT * FROM `lms_learner` WHERE national_id IN (?)', [jsondata], function(err, rows, fields) {
 
       if (err) throw err;
 

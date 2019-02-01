@@ -14,25 +14,31 @@ const tableReducer = (state = tableState, action) => {
     case ADD_LEARNERS:
       return {...state, activeTable: action.payload, batch: action.batch}
     case RECEIVE_BATCH_LEARNERS:
-      let found = false;
-      console.log(action.payload);
-      state.batchLearners.map(learners => {
-        if (learners.national_id == action.payload[0].national_id) {
-          found = true;
-        }
-      })
-      if (found == false) {
-        return {...state, batchLearners: [...state.batchLearners, ...action.payload] }
-      }
-      else {
-        return state
-      }
+      // let found = false;
+      // console.log(action.payload);
+      // state.batchLearners.map(learners => {
+      //   if (learners.national_id == action.payload[0].national_id) {
+      //     found = true;
+      //   }
+      // })
+      // if (found == false) {
+        return {...state, batchLearners: action.payload }
+      // }
+      // else {
+      //   return state
+      // }
     case RECEIVE_BATCH_LEARNERIDS:
       let learnerIDs = [];
+      console.log(action.payload)
       for (var x in action.payload) {
         learnerIDs.push(action.payload[x].learner_ID)
       }
-      return {...state, batchLearnerIDs: learnerIDs}
+      if (learnerIDs.length != 0) {
+        return {...state, batchLearnerIDs: learnerIDs}
+      }
+      else {
+        return {...state, batchLearnerIDs: learnerIDs, batchLearners: learnerIDs}
+      }
     case CLEAR_BATCH_LEARNERS:
         return {...state, batchLearners: []}
     case BATCH_NO:

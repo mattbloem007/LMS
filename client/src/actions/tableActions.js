@@ -4,6 +4,8 @@ import exportToExcel from '../exportToExcel';
 import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 
+let batchLearners = []
+
 
 export const changeActiveTable = activeTable => ({ type: ACTIVE_TABLE, payload: activeTable });
 export const getBatchNumber = (batchNo) => ({ type: BATCH_NO, payload: batchNo })
@@ -18,6 +20,16 @@ export function receiveInfo(json) {
 }
 export function receiveLearners(json) {
   return {
+    // let found = false;
+    // console.log(json.express);
+    //   batchLearners.map(learners => {
+    //   if (learners.national_id == json.express[0].national_id) {
+    //     found = true;
+    //   }
+    // })
+    // if (found == false) {
+    //    batchLearners.push(json.express[0])
+    // }
     type: RECEIVE_BATCH_LEARNERS,
     payload: json.express
   }
@@ -360,6 +372,7 @@ export const downloadPDF = (batch, batchs, learners) => {
 
   export const fetchBatchLearnerIDs = (batch_no) => {
     return (dispatch, getState) => {
+
       dispatch(getBatchNumber(batch_no))
       return fetch('/api/learner_batch', {
         method: 'POST',
@@ -372,9 +385,11 @@ export const downloadPDF = (batch, batchs, learners) => {
         dispatch(receiveInfo(json))
         const state = getState();
         console.log(state.table)
-        for(var i in state.table.batchLearnerIDs) {
-          dispatch(fetchBatchLearners(state.table.batchLearnerIDs[i]))
+        //for(var i in state.table.batchLearnerIDs) {
+        if (state.table.batchLearnerIDs.length != 0) {
+          dispatch(fetchBatchLearners(state.table.batchLearnerIDs))
         }
+      //  }
 
       });
     }
@@ -384,7 +399,7 @@ export const downloadPDF = (batch, batchs, learners) => {
     return dispatch => {
         return fetch('/api/learner_batch2', {
           method: 'POST',
-          body: JSON.stringify({ ID: info }),
+          body: JSON.stringify(info),
           headers: {"Content-Type": "application/json"}
         })
         .then(res => res.json())

@@ -45,6 +45,11 @@ class LearnerTable extends Component {
     this.setState({batchLearners: props.batchLearners})
   }
 
+  componentDidMount() {
+    this.props.tableActions.fetchBatchLearnerIDs(this.props.batch)
+
+  }
+
 
   back = () => {
     this.props.tableActions.changeActiveTable("batch")
@@ -68,11 +73,8 @@ class LearnerTable extends Component {
     this.props.learnerActions.DeleteBatchLearner(this.state.checkedRows, this.props.batch)
     .then(() => {
       this.close()
-      this.forceUpdate();
-      console.log(this.state.refresh)
-      this.setState({refresh: true})
-      console.log(this.state.refresh)
       this.props.tableActions.fetchBatchLearnerIDs(this.props.batch)
+      this.forceUpdate();
     })
   }
 
