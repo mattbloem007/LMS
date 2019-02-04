@@ -19,6 +19,125 @@ export function updateBatchClient(info) {
   }
 }
 
+export const updateProgramme = (info, latestInfo = {}) => {
+  return (dispatch, getState) => {
+    let newInfo = {};
+    for(var key in info) {
+      if (info[key] != "") {
+        newInfo = {...newInfo, [key]: info[key]}
+      }
+    }
+
+    switch(info.programmeType) {
+
+      case "Qualification":
+        latestInfo = {
+          qpNo: newInfo.qpNo,
+          qp: newInfo.qp,
+          qpSAQA: newInfo.qpSAQA,
+          qpNQF: newInfo.qpNQF
+        }
+      break;
+
+      case "Unit Standard":
+        latestInfo = {
+          usSAQA: newInfo.usSAQA,
+          us: newInfo.us,
+          usNQF: newInfo.usNQF,
+          usCredits: newInfo.usCredits
+        }
+      break;
+
+      case "Skill Programme":
+        latestInfo = {
+          spNo: newInfo.spNo,
+          sp: newInfo.sp,
+          spSAQA: newInfo.spSAQA,
+          spNQF: newInfo.spNQF,
+          spCredits: newInfo.spCredits
+        }
+      break;
+
+      case "Short Course":
+        latestInfo = {
+          scNo: newInfo.scNo,
+          sc: newInfo.sc,
+          scNQF: newInfo.scNQF
+        }
+      break;
+    }
+    console.log(latestInfo)
+    dispatch(uploadProgramme(latestInfo))
+    return new Promise.resolve()
+  }
+}
+
+export const validateInput1 = (info, errs) => {
+  return (dispatch, getState) => {
+
+  }
+}
+
+export const uploadProgramme = (info) => {
+  return dispatch => {
+    switch(info.programmeType) {
+
+      case "Qualification":
+      return fetch("/data/lms_qualification",{
+           method: 'POST',
+           body: JSON.stringify(info),
+           headers: {"Content-Type": "application/json"}
+         })
+         .then(function(response){
+           return response.json()
+         }).then(function(body){
+           console.log(body);
+       });
+      break;
+
+      case "Unit Standard":
+      return fetch("/data/lms_us",{
+           method: 'POST',
+           body: JSON.stringify(info),
+           headers: {"Content-Type": "application/json"}
+         })
+         .then(function(response){
+           return response.json()
+         }).then(function(body){
+           console.log(body);
+       });
+      break;
+
+      case "Skill Programme":
+      return fetch("/data/lms_sp",{
+           method: 'POST',
+           body: JSON.stringify(info),
+           headers: {"Content-Type": "application/json"}
+         })
+         .then(function(response){
+           return response.json()
+         }).then(function(body){
+           console.log(body);
+       });
+      break;
+
+      case "Short Course":
+      return fetch("/data/lms_sc",{
+           method: 'POST',
+           body: JSON.stringify(info),
+           headers: {"Content-Type": "application/json"}
+         })
+         .then(function(response){
+           return response.json()
+         }).then(function(body){
+           console.log(body);
+       });
+      break;
+    }
+
+  }
+}
+
 export const validateComplete = errs => ({ type: VALIDATE_PROGRAMME, payload: errs})
 
 export const validateInput = (info, errs) => {
@@ -71,7 +190,6 @@ export const uploadBatch = (info) => {
          console.log(body);
      });
   }
-
 }
 
 export function receiveInfo(json) {

@@ -18,10 +18,22 @@ const initState = {
     programmeType: "",
     qpms: [],
     spms: [],
+    usSAQA: "",
     us: "",
+    usNQF: "",
+    usCredits: "",
+    qpNo: "",
     qp: "",
+    qpSAQA: "",
+    qpNQF: "",
+    spNo: "",
     sp: "",
+    spSAQA: "",
+    spNQF: "",
+    spCredits: "",
+    scNo: "",
     sc: "",
+    scNQF: "",
     show1: true,
     show2: true,
     show3: true,
@@ -33,23 +45,7 @@ class AddProgrammes extends Component {
 
   constructor() {
       super();
-      this.state = {
-          programmeType: "",
-          qpms: [],
-          spms: [],
-          us: "",
-          qpNo: "",
-          qp: "",
-          qpSAQA: "",
-          qpNQF: "",
-          sp: "",
-          sc: "",
-          show1: true,
-          show2: true,
-          show3: true,
-          show4: true
-
-      }
+      this.state = initState;
   }
 
   componentDidMount() {
@@ -87,21 +83,13 @@ class AddProgrammes extends Component {
     }
   }
 
-  // handleQProgramme = value => {
-  //   this.setState({qp: value})
-  //   console.log(value, this.props.qp);
-  //   let index = _.findIndex(this.props.qp, {value: value})
-  //   console.log(index)
-  //   this.props.clientActions.fetchQualificationModules(index + 1);
-  // }
+  validateInput = () => {
+    this.props.programmeActions.updateProgramme(this.state)
+    .then(() => {
+      this.setState(initState)
+    })
+  }
 
-  // handleSProgramme = value => {
-  //   this.setState({sp: value})
-  //   console.log(value);
-  //   let index = _.findIndex(this.props.sp, {value: value})
-  //   console.log(index)
-  //   this.props.clientActions.fetchSPModules(index + 1);
-  // }
 
   render() {
     return(
@@ -113,27 +101,31 @@ class AddProgrammes extends Component {
                   <Form.Field>
                     <Form.Input disabled={this.state.show1} placeholder="Type the Number of the Qualification Programme Name"  onChange={(e,{value})=>{this.setState({qpNo: value})}}></Form.Input>
                     <Form.Input disabled={this.state.show1} placeholder="Type Qualification Programme Name"  onChange={(e,{value})=>{this.setState({qp: value})}}></Form.Input>
-                  <Form.Input disabled={this.state.show1} placeholder="Type Qualification Programme SAQA_ID"  onChange={(e,{value})=>{this.setState({qpSAQA: value})}}></Form.Input>
-                <Form.Input disabled={this.state.show1} placeholder="Type Qualification Programme NQF_LEV"  onChange={(e,{value})=>{this.setState({qpNQF: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show1} placeholder="Type Qualification Programme SAQA_ID"  onChange={(e,{value})=>{this.setState({qpSAQA: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show1} placeholder="Type Qualification Programme NQF_LEV"  onChange={(e,{value})=>{this.setState({qpNQF: value})}}></Form.Input>
                   </Form.Field>
                   <Form.Field>
-                    <Form.Input disabled={this.state.show1} placeholder="Type Qualification Modules" onChange={(e,{value})=>{this.setState({qpms: value})}}></Form.Input>
-                  </Form.Field>
-                  <Form.Field>
+                    <Form.Input disabled={this.state.show2} placeholder="Type Unit Standard SAQA_ID" onChange={(e,{value})=>{this.setState({usSAQA: value})}}></Form.Input>
                     <Form.Input disabled={this.state.show2} placeholder="Type Unit Standard" onChange={(e,{value})=>{this.setState({us: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show2} placeholder="Type Unit Standard NQF Level" onChange={(e,{value})=>{this.setState({usNQF: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show2} placeholder="Type Unit Standard Credits" onChange={(e,{value})=>{this.setState({usCredits: value})}}></Form.Input>
                   </Form.Field>
                   <Form.Field>
-                    <Form.Input disabled={this.state.show3} placeholder="Type Skill Programmes" onChange={(e, {value}) => {this.handleSProgramme(value)}}></Form.Input>
+                    <Form.Input disabled={this.state.show3} placeholder="Type Skill Programmes Number" onChange={(e,{value})=>{this.setState({spNo: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show3} placeholder="Type Skill Programmes" onChange={(e,{value})=>{this.setState({sp: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show3} placeholder="Type Skill Programmes NQF Level" onChange={(e,{value})=>{this.setState({spNQF: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show3} placeholder="Type Skill Programmes Credits" onChange={(e,{value})=>{this.setState({spCredits: value})}}></Form.Input>
                   </Form.Field>
+
                   <Form.Field>
-                    <Form.Input disabled={this.state.show3} placeholder="Type Skill Programme Modules" onChange={(e,{value})=>{this.setState({spms: value})}}></Form.Input>
-                  </Form.Field>
-                  <Form.Field>
+                    <Form.Input disabled={this.state.show4} placeholder="Type Short Course Number" onChange={(e,{value})=>{this.setState({scNo: value})}}></Form.Input>
                     <Form.Input disabled={this.state.show4} placeholder="Type Short Course" onChange={(e,{value})=>{this.setState({sc: value})}}></Form.Input>
+                    <Form.Input disabled={this.state.show4} placeholder="Type Short Course NQF Level" onChange={(e,{value})=>{this.setState({scNQF: value})}}></Form.Input>
                   </Form.Field>
                   <Message success header='Form Completed' content="Saved Programme Successfully" />
                 </Form.Field>
                 <Form.Button primary onClick={this.validateInput}><Icon name="save" /> Save</Form.Button>
+
             </Form>
   )
   }

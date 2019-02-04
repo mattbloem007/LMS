@@ -609,7 +609,7 @@ app.post('/api/deleteBatchLearners', (req, res) => {
     var batch = [];
     for(var i in jsondata){
       ids.push(jsondata[i].id)
-      batch.push(jsondata[i].batch)        
+      batch.push(jsondata[i].batch)
     }
       console.log(ids, batch)
     connection.query('DELETE FROM `lms_learner_batch` WHERE `learner_ID` IN (?) AND `batch_no` IN (?)', [ids, batch], function(err, rows, fields) {
@@ -843,6 +843,90 @@ app.post('/data/lms_batch', function(req, res) {
     }
     console.log(values)
       connection.query("INSERT INTO `lms_batch` (`batch_no`, `date`,`end_date`, `client_name`,`project`,`venue`,`programme`,`credit`,`facilitator`, `assessor`, `moderator`, `assessment_date`, `moderator_date`, `programmeType`, `unitstd`, `qualification`, `skills_programme`, `short_courses`, `q_modules`, `sp_modules`) VALUES (?)", [values], function(err, result){
+        if(err) console.log(err);
+
+        console.log("1 record inserted");
+          });
+
+      res.send({ express: req.body });
+  });
+});
+
+app.post('/data/lms_qualification', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err; // not connected
+    // Use the connection
+    var jsondata = req.body;
+    console.log(jsondata);
+    var values = [];
+    for(var i in jsondata){
+          values.push(jsondata[i]);
+    }
+    console.log(values)
+      connection.query("INSERT INTO `lms_q_programmes`(`Number`, `QUALIFICATION_MODULE_DETAILS`, `SAQA_ID`, `NQF_LEV`) VALUES (?)", [values], function(err, result){
+        if(err) console.log(err);
+
+        console.log("1 record inserted");
+          });
+
+      res.send({ express: req.body });
+  });
+});
+
+app.post('/data/lms_us', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err; // not connected
+    // Use the connection
+    var jsondata = req.body;
+    console.log(jsondata);
+    var values = [];
+    for(var i in jsondata){
+          values.push(jsondata[i]);
+    }
+    console.log(values)
+      connection.query("INSERT INTO `lms_unitstd`(`SAQA_ID`, `UNIT_STANDARD`, `NQF_LEVEL`, `CREDITS`) VALUES (?)", [values], function(err, result){
+        if(err) console.log(err);
+
+        console.log("1 record inserted");
+          });
+
+      res.send({ express: req.body });
+  });
+});
+
+app.post('/data/lms_sp', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err; // not connected
+    // Use the connection
+    var jsondata = req.body;
+    console.log(jsondata);
+    var values = [];
+    for(var i in jsondata){
+          values.push(jsondata[i]);
+    }
+    console.log(values)
+      connection.query("INSERT INTO `lms_sp_programmes`(`Number`, `MODULE_DETAILS`, `SAQA_ID`, `NQF_LEV`, `CREDITS`) VALUES (?)", [values], function(err, result){
+        if(err) console.log(err);
+
+        console.log("1 record inserted");
+          });
+
+      res.send({ express: req.body });
+  });
+});
+
+app.post('/data/lms_sc', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err; // not connected
+    // Use the connection
+    var jsondata = req.body;
+    console.log(jsondata);
+    var values = [];
+    for(var i in jsondata){
+          values.push(jsondata[i]);
+    }
+    console.log(values)
+      connection.query("INSERT INTO `lms_short_courses`(`Number`, `Programme`, `NQF LEV`) VALUES (?)", [values], function(err, result){
         if(err) console.log(err);
 
         console.log("1 record inserted");

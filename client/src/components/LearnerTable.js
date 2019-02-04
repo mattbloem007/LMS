@@ -13,7 +13,8 @@ let info = {
   firstname: null,
   surname: null,
   equity: null,
-  gender: null
+  gender: null,
+  year_attended: null
 }
 
 class LearnerTable extends Component {
@@ -22,8 +23,8 @@ class LearnerTable extends Component {
     super(props);
 
     this.state = {
-                    headings: ["National ID", "First Name", "Surname", "Equity", "Gender"],
-                    allowed: ['national_id', 'firstname', 'surname', 'equity', 'gender'],
+                    headings: ["National ID", "First Name", "Surname", "Equity", "Gender", "Year"],
+                    allowed: ['national_id', 'firstname', 'surname', 'equity', 'gender', "year_attended"],
                     filterBy: {},
                     checkedRows: [],
                     batchLearners: this.props.batchLearners,
@@ -103,7 +104,31 @@ class LearnerTable extends Component {
     this.props.batchLearners.map(learner => {
       info.push(_.mapValues(learner, _.method('toLowerCase')))
     })
-    this.setState({filterBy: filterArr, openFilter: false, batchLearners: info})
+    console.log(filterArr)
+    this.setState({filterBy: filterArr, openFilter: false}, function () {
+      this.sortFilter(info)
+
+    })
+
+
+
+  }
+
+  sortFilter = (info) => {
+    let arr = []
+    if ("gender" in this.state.filterBy) {
+      _.map(info, (learner) => {
+        if (learner.gender == this.state.info.gender) {
+          console.log("hello")
+          arr.push(learner)
+        }
+      })
+    }
+    else {
+      arr = _.filter(info, this.state.filterBy)
+    }
+    console.log(arr)
+    this.setState({batchLearners:arr})
   }
 
   reset = () => {
@@ -116,8 +141,7 @@ class LearnerTable extends Component {
         <Button onClick={this.reset}>Reset Filters</Button>
         <Modal
           onOpen={this.openFilter}
-          onClose={this.filterTable}
-        trigger={<Button>Filter</Button>}>
+          trigger={<Button>Filter</Button>}>
       <Modal.Header>Filter</Modal.Header>
       <Modal.Content>
         <Modal.Description>
@@ -129,6 +153,8 @@ class LearnerTable extends Component {
                 <Form.Input label="Surname" placeholder="Enter Surname" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, surname: data.value}}))}} />
                 <Form.Input label="Equity" placeholder="Enter Equity" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, equity: data.value}}))}} />
                 <Form.Input label="Gender" placeholder="Enter Gender" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, gender: data.value}}))}} />
+                  <Form.Input label="Year" placeholder="Enter Year" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, year_attended: data.value}}))}} />
+
               </Form.Field>
             </Form>
         </Modal.Description>
@@ -153,7 +179,7 @@ class LearnerTable extends Component {
       </Table.Header>
         <Table.Body>
           {
-            _.filter(this.state.batchLearners, this.state.filterBy).map((x, i) => {
+            (this.state.batchLearners).map((x, i) => {
             return(
               <Table.Row key={x.national_id}>
                 <Table.Cell collapsing>
