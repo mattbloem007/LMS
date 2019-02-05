@@ -46,6 +46,18 @@ const getStatusNumbers = data => {
   data.map(item => {
       console.log(item)
     switch (item.ass_status) {
+      case "competent":
+        statusArr[0] = statusArr[0] + 1;
+      break;
+      case "not yet competent":
+        statusArr[1] = statusArr[1] + 1;
+      break;
+      case "not submitted":
+        statusArr[2] = statusArr[2] + 1;
+      break;
+      case "competent after resubmission":
+        statusArr[3] = statusArr[3] + 1;
+      break;
       case "Competent":
         statusArr[0] = statusArr[0] + 1;
       break;

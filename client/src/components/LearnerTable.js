@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as tableActions from '../actions/tableActions'
 import * as learnerActions from '../actions/learnerActions';
 import * as flowActions from '../actions/flowActions'
+import { disability, genderOptions, status, countryOptions, education, languageOptions, yesNoOption } from '../common'
 
 import _ from 'lodash'
 
@@ -13,8 +14,15 @@ let info = {
   firstname: null,
   surname: null,
   equity: null,
+  nationality: null,
+  education: null,
+  language: null,
+  last_school: null,
   gender: null,
-  year_attended: null
+  year_attended: null,
+  employed: null,
+  ass_status: null,
+  disability: null
 }
 
 class LearnerTable extends Component {
@@ -118,7 +126,7 @@ class LearnerTable extends Component {
     let arr = []
     if ("gender" in this.state.filterBy) {
       _.map(info, (learner) => {
-        if (learner.gender === this.state.info.gender) {
+        if (learner.gender === this.state.filterBy.gender) {
           console.log(learner.gender, this.state.info.gender)
           arr.push(learner)
         }
@@ -152,8 +160,15 @@ class LearnerTable extends Component {
                 <Form.Input label="First Name" placeholder="Enter First Name" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, firstname: data.value}}))}} />
                 <Form.Input label="Surname" placeholder="Enter Surname" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, surname: data.value}}))}} />
                 <Form.Input label="Equity" placeholder="Enter Equity" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, equity: data.value}}))}} />
-                <Form.Input label="Gender" placeholder="Enter Gender" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, gender: data.value}}))}} />
-                  <Form.Input label="Year" placeholder="Enter Year" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, year_attended: data.value}}))}} />
+                <Form.Select label="Nationality" placeholder='Select Nationality' onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, nationality: data.value}}))}} fluid search selection options={countryOptions} />
+                <Form.Input label="Last School (EMIS Number)" placeholder="Enter Last School Attended" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, last_school: data.value}}))}} />
+                <Form.Select label="First Language" placeholder="Select Language" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, language: data.value}}))}} fluid search selection options={languageOptions} />
+                <Form.Select label="Highest Education" placeholder="Select Highest Education" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, education: data.value}}))}}  fluid search selection options={education} />
+                <Form.Select label="Gender" placeholder="Select Gender" fluid search selection options={genderOptions} onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, gender: data.value}}))}} />
+                <Form.Input label="Year" placeholder="Enter Year" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, year_attended: data.value}}))}} />
+                <Form.Select label="Assessment Status" placeholder="Select Status" fluid search selection options={status} onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, ass_status: data.value}}))}} />
+                <Form.Select label="Disability" placeholder="Disability" options={disability} onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, disability: data.value}}))}} />
+                <Form.Select label="Employed" placeholder="Select" onChange={this.handleEmployer} fluid search selection options={yesNoOption} />
 
               </Form.Field>
             </Form>
