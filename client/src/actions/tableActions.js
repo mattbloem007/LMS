@@ -41,6 +41,30 @@ export const downloadExcel = (batchs) => {
   }
 }
 
+const getStatusNumbers = data => {
+  let statusArr = [0, 0, 0, 0];
+  data.map(item => {
+      console.log(item)
+    switch (item.ass_status) {
+      case "Competent":
+        statusArr[0] = statusArr[0] + 1;
+      break;
+      case "Not yet competent":
+        statusArr[1] = statusArr[1] + 1;
+      break;
+      case "Not Submitted":
+        statusArr[2] = statusArr[2] + 1;
+      break;
+      case "Competent After Resubmission":
+        statusArr[3] = statusArr[3] + 1;
+      break;
+    }
+  })
+  console.log(statusArr)
+  return statusArr;
+
+}
+
 const _format = (data) => {
 	return data.map(item => {
     let styleC = 'backColor';
@@ -57,16 +81,16 @@ const _format = (data) => {
         styleC = 'resub'
       break;
     }
-    console.log(item)
+    console.log(item, item.firstname.charAt(0).toUpperCase() + item.firstname.slice(1)+ " " + item.surname.charAt(0).toUpperCase() + item.surname.slice(1))
 		return ([
-			{text: item.firstname + " " + item.surname, style: styleC},
+			{text: item.firstname.charAt(0).toUpperCase() + item.firstname.slice(1) + " " + item.surname.charAt(0).toUpperCase() + item.surname.slice(1), style: styleC},
 			{text: item.national_id, style: styleC},
 			{text: item.cellno, style: styleC},
-			{text: item.gender, style: styleC},
-			{text: item.equity, style: styleC},
-      {text: item.year_attended, style: styleC},
-      {text: item.last_school, style: styleC},
-      {text: item.homeaddr, style: styleC}
+			{text: item.gender.charAt(0).toUpperCase() + item.gender.slice(1), style: styleC},
+			{text: item.equity.charAt(0).toUpperCase() + item.equity.slice(1), style: styleC},
+      {text: item.year_attented, style: styleC},
+      {text: item.last_school.charAt(0).toUpperCase() + item.last_school.slice(1), style: styleC},
+      {text: item.homeaddr.charAt(0).toUpperCase() + item.homeaddr.slice(1), style: styleC}
 		]);
 	});
 }
@@ -88,6 +112,8 @@ export const downloadPDF = (batch, batchs, learners) => {
     }
     console.log(info)
 	  const formattedData = _format(learners);
+    const statusInfo = getStatusNumbers(learners);
+    console.log(statusInfo)
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -284,7 +310,7 @@ export const downloadPDF = (batch, batchs, learners) => {
             margin: [ 5, 2, 5, 5 ]
           },
           {
-              text: '0'
+              text: statusInfo[0]
           }
         ],
         // optional space between columns
@@ -300,7 +326,7 @@ export const downloadPDF = (batch, batchs, learners) => {
             margin: [ 5, 2, 5, 5 ]
           },
           {
-              text: '0'
+              text: statusInfo[1]
           }
         ],
         // optional space between columns
@@ -316,7 +342,7 @@ export const downloadPDF = (batch, batchs, learners) => {
             margin: [ 5, 2, 5, 5 ]
           },
           {
-              text: '0'
+              text: statusInfo[3]
           }
         ],
         // optional space between columns

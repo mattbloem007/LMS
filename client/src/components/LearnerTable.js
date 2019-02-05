@@ -66,7 +66,7 @@ class LearnerTable extends Component {
   }
 
   downloadPDF = () => {
-    this.props.tableActions.downloadPDF(this.props.batch, this.props.batchs, this.props.batchLearners)
+    this.props.tableActions.downloadPDF(this.props.batch, this.props.batchs, this.state.batchLearners)
   }
 
   delete = () => {
@@ -191,7 +191,7 @@ class LearnerTable extends Component {
                   </Button>
                 </Table.Cell>
                 {
-                  Object.keys(_.pick(this.state.batchLearners[i], this.state.allowed)).map((y) =><Table.Cell onClick={() => this.showLearnerInfo(x)} key={y}>{(this.state.batchLearners[i])[y]}</Table.Cell>)
+                  Object.keys(_.pick(this.state.batchLearners[i], this.state.allowed)).map((y) =><Table.Cell onClick={() => this.showLearnerInfo(x)} key={y}>{((this.state.batchLearners[i])[y]).charAt(0).toUpperCase() + ((this.state.batchLearners[i])[y]).slice(1)}</Table.Cell>)
                 }
               </Table.Row>
               )
