@@ -118,8 +118,8 @@ class LearnerTable extends Component {
     let arr = []
     if ("gender" in this.state.filterBy) {
       _.map(info, (learner) => {
-        if (learner.gender == this.state.info.gender) {
-          console.log("hello")
+        if (learner.gender === this.state.info.gender) {
+          console.log(learner.gender, this.state.info.gender)
           arr.push(learner)
         }
       })
@@ -132,7 +132,7 @@ class LearnerTable extends Component {
   }
 
   reset = () => {
-    this.setState({filterBy: {}, info: info })
+    this.setState({filterBy: {}, info: info, batchLearners: this.props.batchLearners })
   }
 
   render() {
@@ -186,12 +186,12 @@ class LearnerTable extends Component {
                   <Checkbox onChange={(e, {checked}) => {this.checkRow(x.national_id, checked)}}/>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button onClick={() => this.edit(this.props.batchLearners[i])} icon labelPosition='left' primary size='small'>
+                  <Button onClick={() => this.edit(this.state.batchLearners[i])} icon labelPosition='left' primary size='small'>
                     <Icon name='edit' /> Edit
                   </Button>
                 </Table.Cell>
                 {
-                  Object.keys(_.pick(this.props.batchLearners[i], this.state.allowed)).map((y) =><Table.Cell onClick={() => this.showLearnerInfo(x)} key={y}>{(this.props.batchLearners[i])[y]}</Table.Cell>)
+                  Object.keys(_.pick(this.state.batchLearners[i], this.state.allowed)).map((y) =><Table.Cell onClick={() => this.showLearnerInfo(x)} key={y}>{(this.state.batchLearners[i])[y]}</Table.Cell>)
                 }
               </Table.Row>
               )
