@@ -49,8 +49,7 @@ class Learner extends Component {
   handleLearner = (e, data) => {
     if (data.value != undefined || data.value != null) {
       this.setState({ learnerIDs: data.value});
-      console.log(data, e)
-      this.props.learnerActions.updateBatchLearner({ learnerIDs: data.value})
+      this.props.learnerActions.updateBatchLearner({ learnerIDs: data.value}, "handle")
       // if (data.value.length > 0) {
       //   this.props.learnerActions.fetchLearnerInfo(data.value[data.value.length - 1].split("-")[0]);
       // }

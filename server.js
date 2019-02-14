@@ -420,7 +420,7 @@ app.get('/api/learners', (req, res) => {
     if (err) throw err;
     console.log("connection made");
 
-    connection.query('SELECT `national_id`,`firstname`,`surname`,`equity`,`gender`,`year_attended` FROM `lms_learner`', function(err, rows, fields) {
+    connection.query('SELECT `national_id`,`firstname`,`surname`,`equity`,`nationality`, `last_school`, `language`, `education`, `gender`,`year_attended`, `batch_no`, `programme_names`, `ass_status`, `disability`, `employed` FROM `lms_learner`', function(err, rows, fields) {
 
       if (err) throw err;
 
@@ -464,6 +464,44 @@ app.post('/api/qualificationsMod', (req, res) => {
     })
   })
 
+})
+
+app.post('/api/learnerProgrammes', (req, res) => {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    console.log("connection made Programmes");
+
+    let jsondata = req.body;
+    console.log("THIS", jsondata)
+
+    connection.query('SELECT `programme_names`, `batch_no` FROM `lms_learner` WHERE `national_id` = ?', [jsondata.id], function(err, rows, fields) {
+
+      if (err) throw err;
+
+      console.log('The solution is: ', rows);
+      res.send({ express: rows });
+      connection.release();
+    })
+  })
+})
+
+app.post('/api/batchProgramme', (req, res) => {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    console.log("connection made Programmes");
+
+    let jsondata = req.body;
+    console.log("THIS", jsondata)
+
+    connection.query('SELECT `programme` FROM `lms_batch` WHERE `batch_no` = ?', [jsondata.batch], function(err, rows, fields) {
+
+      if (err) throw err;
+
+      console.log('The solution is: ', rows);
+      res.send({ express: rows });
+      connection.release();
+    })
+  })
 })
 
 app.post('/api/user', (req, res) => {
@@ -1076,6 +1114,28 @@ app.post('/data/lms_learner', function(req, res) {
       res.send({ express: req.body });
   });
 });
+
+app.post('/data/lms_learnerUpdate', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err; // not connected
+    // Use the connection
+    var jsondata = req.body;
+    console.log(jsondata);
+    // var values = [];
+    // for(var i in jsondata){
+    //       values.push(jsondata[i]);
+    // }
+    // console.log(values)
+      connection.query("UPDATE `lms_learner` SET `programme_names` = ?, `batch_no` = ? WHERE `national_id` = ?", [jsondata.programme, jsondata.batch, jsondata.id], function(err, result){
+        if(err) console.log(err);
+
+        console.log("1 record inserted");
+          });
+
+      res.send({ express: req.body });
+  });
+});
+
 
 app.post('/data/lms_learnerEdit', function(req, res) {
   pool.getConnection(function(err, connection) {

@@ -263,7 +263,7 @@ export const updateLearner = (info) => {
   }
 }
 
-export const updateBatchLearner = (info) => {
+export const updateBatchLearner = (info, str) => {
   return (dispatch, getState) => {
     let newInfo = {};
     console.log(info)
@@ -276,7 +276,9 @@ export const updateBatchLearner = (info) => {
     console.log(newInfo)
     dispatch(updateBatch(newInfo))
     const state = getState();
-    dispatch(validateInput1(state.batch.learnerIDs))
+    if (str != "handle") {
+      dispatch(validateInput1(state.batch.learnerIDs))
+    }
   }
 }
 export const validateComplete = errs => ({ type: VALIDATE_LEARNER, payload: errs})
@@ -561,7 +563,9 @@ export const uploadBatchLearner = (info, batch) => {
     }
   }
   console.log(newInfo)
+
   return dispatch => {
+
 
     return fetch("/data/lms_learner_batch",{
          method: 'POST',
@@ -572,7 +576,82 @@ export const uploadBatchLearner = (info, batch) => {
          return response.json()
        }).then(function(body){
          console.log(body);
+         for (var key in newInfo) {
+           dispatch(fetchLearnerProgrammes(newInfo[key].id, batch, ))
+         }
      });
+
+
+
+
+
+  //   dispatch(updateLearnerProgramme(newInfo))
+  }
+}
+
+export const fetchLearnerProgrammes = (id, batch) => {
+  return dispatch => {
+    console.log(id)
+    let info = [];
+    return fetch('/api/learnerProgrammes', {
+      method: 'POST',
+      body: JSON.stringify({id: id, batch: batch}),
+      headers: {"Content-Type": "application/json"}
+    })
+    .then(function(response){
+      return response.json()
+    }).then(function(body){
+      console.log(body);
+      info = [...info, body.express[0]]
+
+      return fetch('/api/batchProgramme', {
+        method: 'POST',
+        body: JSON.stringify({batch: batch}),
+        headers: {"Content-Type": "application/json"}
+      })
+      .then(function(response){
+        console.log(response)
+        return response.json()
+      }).then(function(body){
+        console.log(body);
+        info = [...info, body.express[0]]
+        dispatch(updateLearnerProgramme(info, id, batch))
+
+      });
+
+    });
+
+  }
+}
+
+export const updateLearnerProgramme = (programmes, id, batch) => {
+  return dispatch => {
+    console.log(programmes)
+    let b, pro = "";
+    if (programmes[0].programme_names == null) {
+      pro = programmes[1].programme
+    }
+    else {
+      pro = programmes[0].programme_names + ", " + programmes[1].programme
+    }
+     if (programmes[0].batch_no == null) {
+       b = batch
+     }
+     else {
+       b = programmes[0].batch_no + ", " + batch
+     }
+    console.log(pro, b)
+    return fetch("data/lms_learnerUpdate", {
+      method: 'POST',
+      body: JSON.stringify({ programme: pro, batch: b, id: id}),
+      headers: {"Content-Type": "application/json"}
+    })
+    .then(function(response){
+      return response.json()
+    }).then(function(body){
+      console.log(body);
+    });
+
   }
 }
 

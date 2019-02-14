@@ -5,15 +5,26 @@ import { bindActionCreators } from 'redux';
 import * as tableActions from '../actions/tableActions'
 import * as flowActions from '../actions/flowActions'
 import * as learnerActions from '../actions/learnerActions';
-
+import { disability, genderOptions, status, countryOptions, education, languageOptions, yesNoOption } from '../common'
 import _ from 'lodash'
+
 let info = {
   national_id: null,
   firstname: null,
   surname: null,
   equity: null,
+  nationality: null,
+  education: null,
+  language: null,
+  last_school: null,
+  batch_no: null,
+  programme_names: null,
+  employed: null,
+  ass_status: null,
+  disability: null,
   gender: null,
   year_attended: null
+
 }
 
 class AllLearnerTable extends Component {
@@ -23,6 +34,7 @@ class AllLearnerTable extends Component {
 
     this.state = {
                     headings: ["National ID", "First Name", "Surname", "Equity", "Gender", "Year"],
+                    allowed: ['national_id', 'firstname', 'surname', 'equity', 'gender', "year_attended"],
                     filterBy: {},
                     learners: this.props.learners,
                     checkedRows: [],
@@ -97,11 +109,68 @@ class AllLearnerTable extends Component {
     this.props.learners.map(learner => {
       info.push(_.mapValues(learner, _.method('toLowerCase')))
     })
-    this.setState({filterBy: filterArr, openFilter: false, learners: info})
+    console.log(filterArr)
+    this.setState({filterBy: filterArr, openFilter: false}, function () {
+      this.sortFilter(info)
+
+    })
+
+
+
+  }
+
+  sortFilter = (info) => {
+    let arr = []
+    let count = 0
+
+  for (var key in this.state.filterBy) {
+    _.map(info, (learner) => {
+      if (learner[key] != undefined) {
+        switch(key) {
+          case "gender":
+            if (Object.keys(this.state.filterBy).length == 1 || count == 0) {
+              if(learner[key] === this.state.info[key].toLowerCase()) {
+                arr.push(learner)
+              }
+            }
+             else {
+               arr = _.filter(arr, (learner) => {
+                   if(learner[key] != undefined) {
+                     return learner[key] === this.state.info[key].toLowerCase()
+                   }
+                 })
+             }
+          break;
+          case "year_attended":
+          if (Object.keys(this.state.filterBy).length == 1) {
+            if(learner[key] === this.state.info[key].toLowerCase()) {
+              arr.push(learner)
+            }
+          }
+           else {
+             arr = _.filter(arr, (learner) => {
+                 if(learner[key] != undefined) {
+                   return learner[key] === this.state.info[key].toLowerCase()
+                 }
+               })
+           }
+          break;
+          default:
+            if (learner[key].includes(this.state.info[key].toLowerCase())) {
+              arr.push(learner)
+            }
+
+          }
+        }
+      })
+      count++
+    }
+    console.log(arr)
+    this.setState({learners:arr})
   }
 
   reset = () => {
-    this.setState({filterBy: {}, info: info })
+    this.setState({filterBy: {}, info: info, learners: this.props.learners})
   }
 
   render() {
@@ -110,7 +179,6 @@ class AllLearnerTable extends Component {
         <Button onClick={this.reset}>Reset Filters</Button>
         <Modal
           onOpen={this.openFilter}
-          onClose={this.filterTable}
         trigger={<Button>Filter</Button>}>
       <Modal.Header>Filter</Modal.Header>
       <Modal.Content>
@@ -122,8 +190,17 @@ class AllLearnerTable extends Component {
                 <Form.Input label="First Name" placeholder="Enter First Name" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, firstname: data.value}}))}} />
                 <Form.Input label="Surname" placeholder="Enter Surname" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, surname: data.value}}))}} />
                 <Form.Input label="Equity" placeholder="Enter Equity" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, equity: data.value}}))}} />
-                <Form.Input label="Gender" placeholder="Enter Gender" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, gender: data.value}}))}} />
-                <Form.Input label="Year Attended" placeholder="Enter Year Attended" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, year_attended: data.value}}))}} />
+                <Form.Select label="Nationality" placeholder='Select Nationality' onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, nationality: data.value}}))}} fluid search selection options={countryOptions} />
+                <Form.Input label="Last School (EMIS Number)" placeholder="Enter Last School Attended" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, last_school: data.value}}))}} />
+                <Form.Select label="First Language" placeholder="Select Language" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, language: data.value}}))}} fluid search selection options={languageOptions} />
+                <Form.Select label="Highest Education" placeholder="Select Highest Education" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, education: data.value}}))}}  fluid search selection options={education} />
+                <Form.Select label="Gender" placeholder="Select Gender" fluid search selection options={genderOptions} onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, gender: data.value}}))}} />
+                <Form.Input label="Programme" placeholder="Enter Programme Name" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, programme_names: data.value}}))}} />
+              <Form.Input label="Batch Number" placeholder="Enter Batch Number" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, batch_no: data.value}}))}} />
+                <Form.Input label="Year" placeholder="Enter Year" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, year_attended: data.value}}))}} />
+                <Form.Select label="Assessment Status" placeholder="Select Status" fluid search selection options={status} onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, ass_status: data.value}}))}} />
+                <Form.Select label="Disability" placeholder="Disability" options={disability} onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, disability: data.value}}))}} />
+                <Form.Select label="Employed" placeholder="Select" onChange={this.handleEmployer} fluid search selection options={yesNoOption} />
               </Form.Field>
 
             </Form>
@@ -148,19 +225,19 @@ class AllLearnerTable extends Component {
       </Table.Header>
         <Table.Body>
           {
-            _.filter(this.state.learners, this.state.filterBy).map((x, i) => {
+            (this.state.learners).map((x, i) => {
                 return(
                   <Table.Row key={x.national_id}>
                     <Table.Cell collapsing>
                       <Checkbox onChange={(e, {checked}) => {this.checkRow(x.national_id, checked)}}/>
                     </Table.Cell>
                     <Table.Cell>
-                      <Button onClick={() => this.edit(this.props.learners[i])} icon labelPosition='left' primary size='small'>
+                      <Button onClick={() => this.edit(this.state.learners[i])} icon labelPosition='left' primary size='small'>
                         <Icon name='edit' /> Edit
                       </Button>
                     </Table.Cell>
                     {
-                      Object.keys(this.props.learners[i]).map((y) =><Table.Cell key={y}>{(this.props.learners[i])[y]}</Table.Cell>)
+                      Object.keys(_.pick(this.state.learners[i], this.state.allowed)).map((y) =><Table.Cell key={y}>{((this.state.learners[i])[y]).charAt(0).toUpperCase() + ((this.state.learners[i])[y]).slice(1)}</Table.Cell>)
                     }
                   </Table.Row>
                   )
