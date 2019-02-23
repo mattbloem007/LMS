@@ -51,7 +51,7 @@ export function receiveInfo(json) {
   let info = {};
 
   for (var x in json.express) {
-    console.log(x + " " + json.express[x].end_date)
+  //  console.log(x + " " + json.express[x].end_date)
     info = {
       batch_no: json.express[x].batch_no,
       date: json.express[x].date,

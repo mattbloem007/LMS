@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Table, Menu, Container, Button, Segment, Checkbox, Confirm, Form, Header, Modal } from 'semantic-ui-react'
+import { Icon, Table, Menu, Container, Button, Segment, Checkbox, Confirm, Form, Header, Modal, Label } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as tableActions from '../actions/tableActions'
@@ -23,6 +23,7 @@ let info = {
   ass_status: null,
   disability: null,
   gender: null,
+  client_names: null,
   year_attended: null
 
 }
@@ -56,7 +57,31 @@ class AllLearnerTable extends Component {
   }
 
   downloadExcel = () => {
-    this.props.tableActions.downloadExcel(this.props.learners)
+    let map = {
+      national_id: "National ID",
+      firstname: "First Name",
+      surname: "Surname",
+      equity: "Equity",
+      nationality: "Nationality",
+      last_school: "Last School",
+      language: "Language",
+      education: "Education",
+      gender: "Gender",
+      year_attended: "Year Attended",
+      batch_no: "Batch Number",
+      programme_names: "Programme Names",
+      client_names: "Client Names",
+      ass_status: "Assessment Status",
+      disability: "Disability",
+      employed: "Employed?"
+    }
+    this.state.learners.map(learners => {
+      _.each(learners, (value, key) => {
+        key = map[key] || key
+        learners[key] = value
+      })
+    })
+    this.props.tableActions.downloadExcel(_.omit(this.state.learners, Object.keys(map)))
   }
 
   componentWillReceiveProps(props) {
@@ -190,6 +215,7 @@ class AllLearnerTable extends Component {
                 <Form.Input label="First Name" placeholder="Enter First Name" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, firstname: data.value}}))}} />
                 <Form.Input label="Surname" placeholder="Enter Surname" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, surname: data.value}}))}} />
                 <Form.Input label="Equity" placeholder="Enter Equity" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, equity: data.value}}))}} />
+                <Form.Input label="Client" placeholder="Enter Client Name" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, client_names: data.value}}))}} />
                 <Form.Select label="Nationality" placeholder='Select Nationality' onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, nationality: data.value}}))}} fluid search selection options={countryOptions} />
                 <Form.Input label="Last School (EMIS Number)" placeholder="Enter Last School Attended" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, last_school: data.value}}))}} />
                 <Form.Select label="First Language" placeholder="Select Language" onChange={(e,data)=>{this.setState(prevState => ({info: {...prevState.info, language: data.value}}))}} fluid search selection options={languageOptions} />
@@ -255,6 +281,7 @@ class AllLearnerTable extends Component {
                 <Icon name='delete' /> Delete
               </Button>
               <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.delete} />
+              <Label floated='right' primary size='small'>{(this.state.learners).length} Learners</Label>
             </div>
         </Table.HeaderCell>
       </Table.Row>

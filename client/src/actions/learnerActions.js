@@ -577,7 +577,7 @@ export const uploadBatchLearner = (info, batch) => {
        }).then(function(body){
          console.log(body);
          for (var key in newInfo) {
-           dispatch(fetchLearnerProgrammes(newInfo[key].id, batch, ))
+           dispatch(fetchLearnerProgrammes(newInfo[key].id, batch))
          }
      });
 
@@ -627,7 +627,7 @@ export const fetchLearnerProgrammes = (id, batch) => {
 export const updateLearnerProgramme = (programmes, id, batch) => {
   return dispatch => {
     console.log(programmes)
-    let b, pro = "";
+    let b, pro, client = "";
     if (programmes[0].programme_names == null) {
       pro = programmes[1].programme
     }
@@ -640,10 +640,17 @@ export const updateLearnerProgramme = (programmes, id, batch) => {
      else {
        b = programmes[0].batch_no + ", " + batch
      }
-    console.log(pro, b)
+     if (programmes[0].client_names == null) {
+       client = programmes[1].client_name
+     }
+     else {
+       client = programmes[0].client_names + ", " + programmes[1].client_name
+     }
+
+    console.log(pro, b, client)
     return fetch("data/lms_learnerUpdate", {
       method: 'POST',
-      body: JSON.stringify({ programme: pro, batch: b, id: id}),
+      body: JSON.stringify({ programme: pro, batch: b, id: id, client: client}),
       headers: {"Content-Type": "application/json"}
     })
     .then(function(response){
