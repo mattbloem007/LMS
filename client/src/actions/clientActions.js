@@ -21,7 +21,7 @@ export const saveEditBatch = (info) => {
        }).then(function(body){
          console.log(body);
      });
-     
+
   }
 }
 
@@ -335,7 +335,7 @@ export const validateInput1 = (info, errs) => {
     let moderators = "";
     let assessors = "";
 
-    if (info.facilitator instanceof Array || info.assessor instanceof Array || info.moderator instanceof Array) {
+    if (info.facilitator instanceof Array) {
 
       for (let i = 0; i < info.facilitator.length; i++) {
         if (i == info.facilitator.length - 1) {
@@ -346,30 +346,40 @@ export const validateInput1 = (info, errs) => {
 
         }
       }
-      for (let i = 0; i < info.assessor.length; i++) {
-        if (i == info.assessor.length - 1) {
-          assessors = assessors + info.assessor[i]
-        }
-        else {
-          assessors = assessors + info.assessor[i] + ", ";
-
-        }
-      }
-      for (let i = 0; i < info.moderator.length; i++) {
-        if (i == info.moderator.length - 1) {
-          moderators = moderators + info.moderator[i]
-        }
-        else {
-          moderators = moderators + info.moderator[i] + ", ";
-
-        }
-      }
     }
     else {
       facilitators = info.facilitator
-      assessors = info.assessor
-      moderators = info.moderator
+
     }
+      if (info.assessor instanceof Array) {
+        for (let i = 0; i < info.assessor.length; i++) {
+          if (i == info.assessor.length - 1) {
+            assessors = assessors + info.assessor[i]
+          }
+          else {
+            assessors = assessors + info.assessor[i] + ", ";
+
+          }
+        }
+      }
+      else {
+        assessors = info.assessor
+
+      }
+      if (info.moderator instanceof Array) {
+        for (let i = 0; i < info.moderator.length; i++) {
+          if (i == info.moderator.length - 1) {
+            moderators = moderators + info.moderator[i]
+          }
+          else {
+            moderators = moderators + info.moderator[i] + ", ";
+
+          }
+        }
+      }
+      else {
+        moderators = info.moderator
+      }
 
 
 
