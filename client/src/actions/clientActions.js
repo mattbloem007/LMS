@@ -21,6 +21,7 @@ export const saveEditBatch = (info) => {
        }).then(function(body){
          console.log(body);
      });
+     
   }
 }
 

@@ -14,6 +14,9 @@ import RegisterLearner from '../components/registerLearner';
 import RegisterClient from '../components/registerClient';
 import ClientReport from '../components/clientReport'
 import Client from './chooseClient'
+import RegisterFacilitator from './registerFacilitator'
+import RegisterAssessor from '../components/registerAssessor'
+import RegisterModerator from '../components/registerModerator'
 
 class ExistingProjects extends Component {
 
@@ -81,6 +84,19 @@ class ExistingProjects extends Component {
       case "creport":
         currentForm = (<ClientReport />)
       break;
+
+      case "addFac":
+        currentForm = (<RegisterFacilitator />)
+      break;
+
+      case "addAss":
+        currentForm = (<RegisterAssessor />)
+      break;
+
+      case "addMod":
+        currentForm = (<RegisterModerator />)
+      break;
+
       default:
 
     }

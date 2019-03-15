@@ -141,20 +141,40 @@ class Client extends Component {
 
   addFacilitator = () => {
     this.props.clientActions.updateBatchClient(this.state)
-    this.props.flowActions.changeActiveStep("addFac");
+    if(this.props.type == "edit-c") {
+      this.props.tableActions.changeActiveTable("addFac")
+    }
+    else {
+      this.props.flowActions.changeActiveStep("addFac");
+    }
   }
   addModerator = () => {
     this.props.clientActions.updateBatchClient(this.state)
-    this.props.flowActions.changeActiveStep("addMod");
+    if(this.props.type == "edit-c") {
+      this.props.tableActions.changeActiveTable("addMod")
+    }
+    else {
+      this.props.flowActions.changeActiveStep("addMod");
+    }
   }
   addAssessor = () => {
     this.props.clientActions.updateBatchClient(this.state)
-    this.props.flowActions.changeActiveStep("addAss");
+    if(this.props.type == "edit-c") {
+      this.props.tableActions.changeActiveTable("addAss")
+    }
+    else {
+      this.props.flowActions.changeActiveStep("addAss");
+    }
   }
 
   addClient = () => {
     this.props.clientActions.updateBatchClient(this.state)
-    this.props.flowActions.changeActiveStep("rclient");
+    if(this.props.type == "edit-c") {
+      this.props.tableActions.changeActiveTable("client")
+    }
+    else {
+      this.props.flowActions.changeActiveStep("rclient");
+    }
   }
 
   handleProgramme = (value) => {
