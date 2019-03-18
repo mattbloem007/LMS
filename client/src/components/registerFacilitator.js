@@ -4,6 +4,7 @@ import { isEmpty, isNumeric, isAlpha, isMobilePhone, isLength } from 'validator'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as facilitatorActions from '../actions/facilitatorActions';
+import * as tableActions from '../actions/tableActions';
 import * as flowActions from '../actions/flowActions';
 import { days, months } from '../common';
 
@@ -38,6 +39,10 @@ class RegisterFacilitator extends Component{
     if (this.props.type == "add") {
       this.props.facilitatorActions.updateFacilitator(this.state.info);
       this.props.flowActions.changeActiveStep("client")
+    }
+    else if (this.props.type == "add-c") {
+      this.props.facilitatorActions.updateFacilitator(this.state.info);
+      this.props.tableActions.changeActiveTable("client")
     }
     else {
       this.props.facilitatorActions.updateFacilitator(this.state.info);
@@ -86,6 +91,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   facilitatorActions: bindActionCreators(facilitatorActions, dispatch),
+  tableActions: bindActionCreators(tableActions, dispatch),
   flowActions: bindActionCreators(flowActions, dispatch)
 })
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterFacilitator);

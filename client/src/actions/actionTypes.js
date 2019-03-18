@@ -65,3 +65,7 @@ export const EDIT_MODERATOR = 'EDIT_MODERATOR';
 export const EDIT_ASSESSOR = 'EDIT_ASSESSOR';
 export const EDIT_LEARNER = 'EDIT_LEARNER';
 export const EDIT_BATCH = 'EDIT_BATCH';
+export const UPDATE_FAC = 'UPDATE_FAC';
+export const UPDATE_MOD = 'UPDATE_MOD';
+export const UPDATE_ASS = 'UPDATE_ASS';
+export const UPDATE_CLI = 'UPDATE_CLI';

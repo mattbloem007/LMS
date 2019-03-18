@@ -1,4 +1,4 @@
-import { SUCCESS, EDIT_MODERATOR, VALIDATE_MODERATOR, SAVE_MODERATOR, RESET_MODERATOR, RECEIVE_MODERATORS } from '../actions/actionTypes';
+import { UPDATE_MOD, SUCCESS, EDIT_MODERATOR, VALIDATE_MODERATOR, SAVE_MODERATOR, RESET_MODERATOR, RECEIVE_MODERATORS } from '../actions/actionTypes';
 
 const moderatorState = {
   name: "",
@@ -36,6 +36,8 @@ const moderatorReducer = (state = moderatorState, action) => {
       return {...state, ...action.payload}
     case SUCCESS:
       return {...state, success: action.payload}
+    case UPDATE_MOD:
+      return {...state, type: action.payload}
     default:
       return state;
   }

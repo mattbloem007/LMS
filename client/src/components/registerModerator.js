@@ -44,6 +44,10 @@ class RegisterModerator extends Component{
       this.props.moderatorActions.updateModerator(this.state.info);
       this.props.flowActions.changeActiveStep("client")
     }
+    else if (this.props.type == "add-c") {
+      this.props.moderatorActions.updateModerator(this.state.info);
+      this.props.tableActions.changeActiveTable("client")
+    }
     else {
       this.props.moderatorActions.updateModerator(this.state.info);
       this.props.flowActions.changeActiveStep("Moderator")

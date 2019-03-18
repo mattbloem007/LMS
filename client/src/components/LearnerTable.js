@@ -77,6 +77,15 @@ class LearnerTable extends Component {
     this.props.tableActions.downloadPDF(this.props.batch, this.props.batchs, this.state.batchLearners)
   }
 
+  addLearner = () => {
+    this.props.learnerActions.updateBatchLearner(this.state)
+    if (this.props.saved == true || this.props.type == "edit") {
+      this.props.learnerActions.resetLearnerState();
+    }
+    this.props.tableActions.changeActiveTable("rLearner");
+
+  }
+
   delete = () => {
     console.log(this.state.checkedRows)
     this.props.learnerActions.DeleteBatchLearner(this.state.checkedRows, this.props.batch)
@@ -220,6 +229,7 @@ class LearnerTable extends Component {
             <Button onClick={this.downloadPDF} floated='right' icon labelPosition='left' primary size='small'>
               <Icon name='download' /> Download Report
             </Button>
+            <Button primary onClick={this.addLearner} floated='right' primary size='small'><Icon name="add"/>Add New Learner</Button>
             <div>
               <Button onClick={this.open} floated='left' icon labelPosition='left' primary size='small'>
                 <Icon name='delete' /> Delete

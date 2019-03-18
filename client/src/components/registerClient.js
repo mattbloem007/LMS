@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as clientActions from '../actions/clientActions';
 import * as flowActions from '../actions/flowActions';
+import * as tableActions from '../actions/tableActions';
 
 class RegisterClient extends Component{
 
@@ -42,6 +43,10 @@ class RegisterClient extends Component{
     if (this.props.type == "add") {
       this.props.clientActions.updateClient(this.state.info);
       this.props.flowActions.changeActiveStep("client")
+    }
+    else if(this.props.type == "add-c") {
+      this.props.clientActions.updateClient(this.state.info);
+      this.props.tableActions.changeActiveTable("client")
     }
     else {
       this.props.clientActions.updateClient(this.state.info);

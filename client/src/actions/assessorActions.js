@@ -1,4 +1,4 @@
-import {  EDIT_ASSESSOR, VALIDATE_ASSESSOR, SAVE_ASSESSOR, RESET_ASSESSOR, RECEIVE_ASSESSORS, SUCCESS } from './actionTypes'
+import { UPDATE_ASS, EDIT_ASSESSOR, VALIDATE_ASSESSOR, SAVE_ASSESSOR, RESET_ASSESSOR, RECEIVE_ASSESSORS, SUCCESS } from './actionTypes'
 import { isEmpty, isNumeric, isAlpha, isMobilePhone, isLength } from 'validator';
 import { changeActiveStep } from './flowActions'
 import { changeActiveTable } from './tableActions'
@@ -7,6 +7,7 @@ import _ from 'lodash'
 
 export const validateComplete = errs => ({ type: VALIDATE_ASSESSOR, payload: errs})
 export const success = (saved) => ({type: SUCCESS, payload: saved})
+export const updateAss = () => ({type: UPDATE_ASS, payload: "add-c"})
 
 
 export const Delete = (rows) => {

@@ -39,8 +39,20 @@ class RegisterAssessor extends Component{
   }
 
   back = () => {
-    this.props.assessorActions.updateAssessor(this.state.info);
-    this.props.flowActions.changeActiveStep("client")
+
+
+    if (this.props.type == "add") {
+      this.props.assessorActions.updateAssessor(this.state.info);
+      this.props.flowActions.changeActiveStep("client")
+    }
+    else if (this.props.type == "add-c") {
+      this.props.assessorActions.updateAssessor(this.state.info);
+      this.props.tableActions.changeActiveTable("client")
+    }
+    else {
+      this.props.assessorActions.updateAssessor(this.state.info);
+      this.props.flowActions.changeActiveStep("Assessors")
+    }
   }
 
   render() {

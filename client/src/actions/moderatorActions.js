@@ -1,4 +1,4 @@
-import {  SUCCESS, EDIT_MODERATOR, VALIDATE_MODERATOR, SAVE_MODERATOR, RESET_MODERATOR, RECEIVE_MODERATORS } from './actionTypes'
+import {  UPDATE_MOD, SUCCESS, EDIT_MODERATOR, VALIDATE_MODERATOR, SAVE_MODERATOR, RESET_MODERATOR, RECEIVE_MODERATORS } from './actionTypes'
 import { isEmpty, isNumeric, isAlpha, isMobilePhone, isLength } from 'validator';
 import { changeActiveStep } from './flowActions'
 import { changeActiveTable } from './tableActions'
@@ -7,6 +7,8 @@ import _ from 'lodash'
 
 export const validateComplete = errs => ({ type: VALIDATE_MODERATOR, payload: errs})
 export const success = (saved) => ({type: SUCCESS, payload: saved})
+export const updateMod = () => ({type: UPDATE_MOD, payload: "add-c"})
+
 
 export const Delete = (rows) => {
   return dispatch => {

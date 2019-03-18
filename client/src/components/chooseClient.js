@@ -3,6 +3,9 @@ import { Segment, Form, Icon, Message } from 'semantic-ui-react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as clientActions from '../actions/clientActions';
+import * as facilitatorActions from '../actions/facilitatorActions';
+import * as moderatorActions from '../actions/moderatorActions'
+import * as assessorActions from '../actions/assessorActions'
 import * as programmeActions from '../actions/programmeActions'
 import * as flowActions from '../actions/flowActions';
 import * as learnerActions from '../actions/learnerActions';
@@ -142,6 +145,7 @@ class Client extends Component {
   addFacilitator = () => {
     this.props.clientActions.updateBatchClient(this.state)
     if(this.props.type == "edit-c") {
+      this.props.facilitatorActions.updateFac();
       this.props.tableActions.changeActiveTable("addFac")
     }
     else {
@@ -151,6 +155,7 @@ class Client extends Component {
   addModerator = () => {
     this.props.clientActions.updateBatchClient(this.state)
     if(this.props.type == "edit-c") {
+      this.props.moderatorActions.updateMod();
       this.props.tableActions.changeActiveTable("addMod")
     }
     else {
@@ -160,6 +165,7 @@ class Client extends Component {
   addAssessor = () => {
     this.props.clientActions.updateBatchClient(this.state)
     if(this.props.type == "edit-c") {
+      this.props.assessorActions.updateAss();
       this.props.tableActions.changeActiveTable("addAss")
     }
     else {
@@ -170,6 +176,7 @@ class Client extends Component {
   addClient = () => {
     this.props.clientActions.updateBatchClient(this.state)
     if(this.props.type == "edit-c") {
+      this.props.clientActions.updateCli();
       this.props.tableActions.changeActiveTable("client")
     }
     else {
@@ -388,6 +395,9 @@ const mapDispatchToProps = dispatch => ({
   programmeActions: bindActionCreators(programmeActions, dispatch),
   learnerActions: bindActionCreators(learnerActions, dispatch),
   tableActions: bindActionCreators(tableActions, dispatch),
+  facilitatorActions: bindActionCreators(facilitatorActions, dispatch),
+  moderatorActions: bindActionCreators(moderatorActions, dispatch),
+  assessorActions: bindActionCreators(assessorActions, dispatch),
   flowActions: bindActionCreators(flowActions, dispatch)
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Client);
