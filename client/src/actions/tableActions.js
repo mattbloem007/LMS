@@ -81,6 +81,18 @@ const _format = (data) => {
 	return data.map(item => {
     let styleC = 'backColor';
     switch (item.ass_status ) {
+      case "competent":
+        styleC = 'backColor'
+      break;
+      case "not yet competent":
+        styleC = 'notCompetent'
+      break;
+      case "not submitted":
+        styleC = 'notSubmitted'
+      break;
+      case "competent after resubmission":
+        styleC = 'resub'
+      break;
       case "Competent":
         styleC = 'backColor'
       break;
