@@ -44,7 +44,7 @@ export const downloadExcel = (batchs) => {
 const getStatusNumbers = data => {
   let statusArr = [0, 0, 0, 0];
   data.map(item => {
-      console.log(item)
+      console.log(item.ass_status)
     switch (item.ass_status) {
       case "competent":
         statusArr[0] = statusArr[0] + 1;
@@ -77,33 +77,38 @@ const getStatusNumbers = data => {
 
 }
 
-const _format = (data) => {
+const _format = (data, credit) => {
 	return data.map(item => {
     let styleC = 'backColor';
-    switch (item.ass_status ) {
-      case "competent":
-        styleC = 'backColor'
-      break;
-      case "not yet competent":
-        styleC = 'notCompetent'
-      break;
-      case "not submitted":
-        styleC = 'notSubmitted'
-      break;
-      case "competent after resubmission":
-        styleC = 'resub'
-      break;
-      case "Competent":
-        styleC = 'backColor'
-      break;
-      case "Not yet competent":
-        styleC = 'notCompetent'
-      break;
-      case "Not Submitted":
-        styleC = 'notSubmitted'
-      case "Competent After Resubmission":
-        styleC = 'resub'
-      break;
+    if (credit == "credit") {
+      switch (item.ass_status) {
+        case "competent":
+          styleC = 'backColor'
+        break;
+        case "not yet competent":
+          styleC = 'notCompetent'
+        break;
+        case "not submitted":
+          styleC = 'notSubmitted'
+        break;
+        case "competent after resubmission":
+          styleC = 'resub'
+        break;
+        case "Competent":
+          styleC = 'backColor'
+        break;
+        case "Not yet competent":
+          styleC = 'notCompetent'
+        break;
+        case "Not Submitted":
+          styleC = 'notSubmitted'
+        case "Competent After Resubmission":
+          styleC = 'resub'
+        break;
+      }
+    }
+    else {
+      styleC = 'noncredit'
     }
     console.log(item, item.firstname.charAt(0).toUpperCase() + item.firstname.slice(1)+ " " + item.surname.charAt(0).toUpperCase() + item.surname.slice(1))
 		return ([
@@ -135,7 +140,7 @@ export const downloadPDF = (batch, batchs, learners) => {
       }
     }
     console.log(info)
-	  const formattedData = _format(learners);
+	  const formattedData = _format(learners, info.credit);
     const statusInfo = getStatusNumbers(learners);
     console.log(statusInfo)
 
@@ -411,6 +416,9 @@ export const downloadPDF = (batch, batchs, learners) => {
         },
         resub: {
           fillColor:'orange'
+        },
+        noncredit: {
+          fillColor: 'white'
         }
       }
     };
