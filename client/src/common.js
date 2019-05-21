@@ -356,6 +356,7 @@ export const languageOptions = [
   {text: 'English', value: 'English'},
   {text: 'Ndebele', value: 'Ndebele'},
   {text: 'Northern Sotho', value: 'Northern Sotho'},
+  {text: 'Sepedi', value: 'Sepedi'},
   {text: 'Southern Sotho', value: 'Southern Sotho'},
   {text: 'Swati', value: 'Swati'},
   {text: 'Tsonga', value: 'Tsonga'},
