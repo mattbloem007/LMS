@@ -135,7 +135,7 @@ export const downloadPDF = (batch, batchs, learners) => {
     let info = batchs[0];
     for (var x = 0; x < batchs.length; x++) {
       console.log(batchs[x].batch_no + " " + parseInt(batch))
-      if (batchs[x].batch_no == parseInt(batch)) {
+      if (batchs[x].batch_no == batch) {
         info = batchs[x]
       }
     }
