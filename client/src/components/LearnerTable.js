@@ -236,7 +236,6 @@ class LearnerTable extends Component {
               </Button>
               <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.delete} />
               <Label floated='right' primary size='small'>{(this.state.batchLearners).length} Learners</Label>
-
             </div>
         </Table.HeaderCell>
       </Table.Row>
