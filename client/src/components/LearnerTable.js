@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Table, Menu, Container, Button, Checkbox, Confirm, Form, Header, Modal, Segment } from 'semantic-ui-react'
+import { Icon, Table, Menu, Container, Button, Checkbox, Confirm, Form, Header, Modal, Segment, Label } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as tableActions from '../actions/tableActions'
@@ -235,6 +235,8 @@ class LearnerTable extends Component {
                 <Icon name='delete' /> Delete
               </Button>
               <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.delete} />
+              <Label floated='right' primary size='small'>{(this.state.batchLearners).length} Learners</Label>
+
             </div>
         </Table.HeaderCell>
       </Table.Row>
