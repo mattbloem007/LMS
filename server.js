@@ -194,9 +194,9 @@ var club = mysql.createPool({
   aquireTimeout   : 60 * 60 * 1000,
   timeout         : 60 * 60 * 1000,
   host     : '41.185.8.125',
-  user     : 'xiconco1_mikeb',
-  password : 'X4k474ssPz',
-  database : 'xiconco1_iosgroup_clubs'
+  user     : 'xic02_xiconco1',
+  password : '7MmHzK4W8xJf',
+  database : 'xic02_iosgroup_clubs'
 })
 var pool  = mysql.createPool({
   connectionLimit : 1000,
@@ -204,9 +204,9 @@ var pool  = mysql.createPool({
   aquireTimeout   : 60 * 60 * 1000,
   timeout         : 60 * 60 * 1000,
   host     : '41.185.8.125',
-  user     : 'xiconco1_mikeb',
-  password : 'X4k474ssPz',
-  database : 'xiconco1_lms'
+  user     : 'xic02_xiconco1',
+  password : '7MmHzK4W8xJf',
+  database : 'xic02_lms'
   // host     : 'localhost',
   // user     : 'root',
   // password : '',
@@ -256,7 +256,7 @@ app.get('/api/lms_batch', (req, res) => {
     if (err) throw err;
     console.log("connection made");
 
-    connection.query('SELECT * FROM `lms_batch`', function(err, rows, fields) {
+    connection.query('SELECT * FROM `lms_batch` ORDER BY `batch_no`', function(err, rows, fields) {
 
       if (err) throw err;
 
