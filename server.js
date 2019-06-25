@@ -43,10 +43,10 @@ app.get('/saveProgramme', function(req, res) {
       return new Promise((resolve, reject) => {
 
           context.db = mysql.createConnection({
-            host     : '41.185.8.125',
-            user     : 'xiconco1_mikeb',
-            password : 'X4k474ssPz',
-            database : 'xiconco1_lms'
+            host     : '197.242.145.131',
+  user     : 'iosgroup_iosdb',
+  password : 'IOS1Group2PW3#',
+  database : 'iosgroup_clubs'
           });
 
           context.db.connect((err) => {
@@ -193,25 +193,44 @@ var club = mysql.createPool({
   connectTimeout  : 60 * 60 * 1000,
   aquireTimeout   : 60 * 60 * 1000,
   timeout         : 60 * 60 * 1000,
-  host     : '41.185.8.125',
-  user     : 'xic02_xiconco1',
-  password : '7MmHzK4W8xJf',
-  database : 'xic02_iosgroup_clubs'
+  host     : '197.242.145.131',
+  user     : 'iosgroup_iosdb',
+  password : 'IOS1Group2PW3#',
+  database : 'iosgroup_clubs'
 })
 var pool  = mysql.createPool({
   connectionLimit : 1000,
   connectTimeout  : 60 * 60 * 1000,
   aquireTimeout   : 60 * 60 * 1000,
   timeout         : 60 * 60 * 1000,
-  host     : '41.185.8.125',
-  user     : 'xic02_xiconco1',
-  password : '7MmHzK4W8xJf',
-  database : 'xic02_lms'
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : '',
-  // database : 'lms'
-   });
+  host     : '197.242.145.131',
+  user     : 'iosgroup_iosdb',
+  password : 'IOS1Group2PW3#',
+  database : 'iosgroup_lms'
+});
+
+// var club = mysql.createPool({
+//   // connectionLimit : 1000,
+//   // connectTimeout  : 60 * 60 * 1000,
+//   // aquireTimeout   : 60 * 60 * 1000,
+//   // timeout         : 60 * 60 * 1000,
+//   host     : '41.185.8.137',
+//   user     : 'xic02',
+//   password : '7MmHzK4W8xJf',
+//   database : 'xic02_iosgroup_clubs'
+// })
+// var pool  = mysql.createPool({
+//   // connectionLimit : 1000,
+//   // connectTimeout  : 60 * 60 * 1000,
+//   // aquireTimeout   : 60 * 60 * 1000,
+//   // timeout         : 60 * 60 * 1000,
+//   host     : '41.185.8.137',
+//   user     : 'xic02',
+//   password : '7MmHzK4W8xJf',
+//   database : 'xic02_lms'
+// });
+
+
 
 
 
