@@ -87,6 +87,7 @@ class Client extends Component {
           qp: "",
           sp: "",
           sc: "",
+          scus: "",
           show1: true,
           show2: true,
           show3: true,
@@ -298,6 +299,9 @@ class Client extends Component {
                     <Form.Select disabled={this.state.show4} placeholder="Select Short Course"  fluid search selection options={this.props.sc} onChange={(e,{value})=>{this.setState({sc: value})}}></Form.Select>
                   </Form.Field>
                   <Form.Field>
+                    <Form.Select disabled={this.state.show4} placeholder="Select Short Course Unit Standard"  fluid multiple search selection options={this.props.us} onChange={(e,{value})=>{this.setState({scus: value})}}></Form.Select>
+                  </Form.Field>
+                  <Form.Field>
                     <Form.Select defaultValue={this.props.facilitator} label="Facilitator" placeholder="Select Facilitator Name" fluid multiple search selection closeOnChange onChange={(e,{value})=>{this.setState({facilitator: value})}} options={this.props.facilitators} error={this.props.facilitatorError}/>
                   </Form.Field>
                   <Form.Field>
@@ -345,6 +349,7 @@ const mapStateToProps = state => ({
   sp: state.client.sp,
   spm: state.client.spm,
   sc: state.client.sc,
+  scus: state.client.scus,
   projectError: state.client.projectError,
   dayError: state.client.dayError,
   yearError: state.client.yearError,

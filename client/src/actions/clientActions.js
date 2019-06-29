@@ -435,6 +435,7 @@ export const validateInput1 = (info, errs) => {
       qp: info.qp,
       sp: info.sp,
       sc: info.sc,
+      scus: info.scus,
       qpms: qmodules,
       spms: spmodules
 

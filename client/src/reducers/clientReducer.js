@@ -31,6 +31,7 @@ const clientState = {
   sp: [],
   spm: [],
   sc: [],
+  scus: [],
   batchError: false,
   clientError: false,
   dayError: false,

@@ -105,6 +105,9 @@ const _format = (data, credit) => {
         case "Competent After Resubmission":
           styleC = 'resub'
         break;
+        default:
+          styleC ='notSubmitted'
+        break;
       }
     }
     else {
@@ -117,9 +120,10 @@ const _format = (data, credit) => {
 			{text: item.cellno, style: styleC},
 			{text: item.gender.charAt(0).toUpperCase() + item.gender.slice(1), style: styleC},
 			{text: item.equity.charAt(0).toUpperCase() + item.equity.slice(1), style: styleC},
-      {text: item.year_attented, style: styleC},
+      {text: item.year_attended, style: styleC},
       {text: item.last_school.charAt(0).toUpperCase() + item.last_school.slice(1), style: styleC},
-      {text: item.homeaddr.charAt(0).toUpperCase() + item.homeaddr.slice(1), style: styleC}
+      {text: item.homeaddr.charAt(0).toUpperCase() + item.homeaddr.slice(1), style: styleC},
+      {text: item.club.charAt(0).toUpperCase() + item.club.slice(1), style: styleC}
 		]);
 	});
 }
@@ -397,7 +401,7 @@ export const downloadPDF = (batch, batchs, learners) => {
             dontBreakRows: true,
             body: [
               [{text: 'Full Name', style: 'tableHeader'}, {text: 'ID Number', style: 'tableHeader'}, {text: 'Cell Phone', style: 'tableHeader'}, {text: 'Gender', style: 'tableHeader'}, {text: 'Ethnicity', style: 'tableHeader'},
-               {text: 'Year', style: 'tableHeader'}, {text: 'School', style: 'tableHeader'}, {text: 'Address', style: 'tableHeader'}
+               {text: 'Year', style: 'tableHeader'}, {text: 'School', style: 'tableHeader'}, {text: 'Address', style: 'tableHeader'}, {text: 'Club', style: 'tableHeader'}
              ],
               ...formattedData,
             ]
