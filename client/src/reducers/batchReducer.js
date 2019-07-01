@@ -30,6 +30,7 @@ const batchState = {
   qp: "",
   sp: "",
   sc: "",
+  scus: "",
   qpms: [],
   spms: [],
   modules: {},

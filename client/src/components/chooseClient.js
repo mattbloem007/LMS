@@ -46,6 +46,7 @@ const initState = {
     qp: "",
     sp: "",
     sc: "",
+    scus: "",
     show1: true,
     show2: true,
     show3: true,
