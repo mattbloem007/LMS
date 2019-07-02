@@ -757,7 +757,7 @@ export function receiveClubs(json) {
   let clientsArr = [];
   let sorted = _.orderBy(json.express, ['clube_name'],['asc']);
   for (const key of Object.keys(sorted)) {
-    clientsArr = [...clientsArr, Object.assign({text: sorted[key].club_name, value: key})]
+    clientsArr = [...clientsArr, Object.assign({text: sorted[key].club_name, value: sorted[key].club_name})]
   }
   console.log(clientsArr)
 
