@@ -5,11 +5,17 @@ export const editBatch = (batch) => {
   return dispatch => {
     let adate = new Date(batch.assessment_date)
     let date = new Date(batch.date)
+    console.log(date);
     let end_date = new Date(batch.end_date)
     let mdate = new Date(batch.moderator_date)
     let abool = false;
     let ebool = false;
     let mbool = false;
+    let bool = false;
+
+    if (date == "Invalid Date") {
+      bool = true;
+    }
 
     if (adate == "Invalid Date") {
       abool = true;
@@ -27,9 +33,9 @@ export const editBatch = (batch) => {
                   aday: abool ? "" : adate.getDate().toString(),
                   amonth: abool ? "" : months[adate.getMonth()].text,
                   ayear: abool ? "" : adate.getFullYear().toString(),
-                  day: date.getDate().toString(),
-                  month: months[date.getMonth()].text,
-                  year: date.getFullYear().toString(),
+                  day: bool ? "" : date.getDate().toString(),
+                  month: bool ? "" : months[date.getMonth()].text,
+                  year: bool ? "" : date.getFullYear().toString(),
                   endday: ebool ? "" : end_date.getDate().toString(),
                   endmonth: ebool ? "" : months[end_date.getMonth()].text,
                   endyear: ebool ? "" : end_date.getFullYear().toString(),
