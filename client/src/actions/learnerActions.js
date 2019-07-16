@@ -63,15 +63,21 @@ export const editLearner = (learner) => {
       strAddr[i] = learner.postaddr.split(", ")[i];
     }
     let dob = new Date(learner.dob);
+    let bool = false;
+
+    if (dob == "Invalid Date") {
+      bool = true;
+    }
+
     dispatch(edit({
       ...learner,
       strAddress: learner.homeaddr,
       postCode: homeAddr[homeAddr.length - 1],
       postCode2: strAddr[strAddr.length - 1],
       postAddress: learner.postaddr,
-      day: dob.getDate().toString(),
-      month:months[dob.getMonth()].text,
-      year: dob.getFullYear().toString(),
+      day: bool ? "" : dob.getDate().toString(),
+      month: bool ? "" : months[dob.getMonth()].text,
+      year: bool ? "" : dob.getFullYear().toString(),
        type: "edit"}))
   }
 }
@@ -176,13 +182,19 @@ export const loadLearner = (json, t) => {
     //   strAddr[i] = json.express[0].postaddr.split(", ")[i];
     // }
     let dob = new Date(json.express[0].dob);
+    let bool = false;
+
+    if (dob == "Invalid Date") {
+      bool = true;
+    }
+
     dispatch(edit({
       ...newInfo,
       strAddress: newInfo.homeaddr,
       postAddress: newInfo.postaddr,
-      day: dob.getDate().toString(),
-      month:months[dob.getMonth()].text,
-      year: dob.getFullYear().toString(),
+      day: bool ? "" : dob.getDate().toString(),
+      month: bool ? "" : months[dob.getMonth()].text,
+      year: bool ? "" : dob.getFullYear().toString(),
     }))
     //dispatch(changeActiveTable("rLearner"))
   }
