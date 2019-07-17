@@ -288,7 +288,7 @@ class Client extends Component {
                     <Form.Select disabled={this.state.show1} placeholder="Select Qualification Module"  fluid multiple search selection closeOnChange options={this.props.qpm} onChange={(e,{value})=>{this.setState({qpms: value})}}></Form.Select>
                   </Form.Field>
                   <Form.Field>
-                    <Form.Select disabled={this.state.show2} placeholder="Select Unit Standard"  fluid search selection options={this.props.us} onChange={(e,{value})=>{this.setState({us: value})}}></Form.Select>
+                    <Form.Select disabled={this.state.show2} placeholder="Select Unit Standard"  fluid multiple search selection options={this.props.us} onChange={(e,{value})=>{this.setState({us: value})}}></Form.Select>
                   </Form.Field>
                   <Form.Field>
                     <Form.Select disabled={this.state.show3} placeholder="Select Skill Programmes"  fluid search selection options={this.props.sp} onChange={(e, {value}) => {this.handleSProgramme(value)}}></Form.Select>

@@ -316,12 +316,12 @@ export const validateInput = (info, errs) => {
 
     switch (info.id_type) {
       case "National ID":
-        // if (info.national_id.length != 13 ||!isNumeric(info.national_id)) {
-        //   errs = {...errs, idError: true}
-        // }
-        // else {
-        //   errs = {...errs, idError: false}
-        // }
+        if (info.national_id.length != 13 ||!isNumeric(info.national_id)) {
+          errs = {...errs, idError: true}
+        }
+        else {
+          errs = {...errs, idError: false}
+        }
       break;
       case "Passport":
         if (info.national_id.length < 6) {
@@ -332,12 +332,12 @@ export const validateInput = (info, errs) => {
         }
       break;
       default:
-        // if (!isNumeric(info.national_id)) {
-        //   errs = {...errs, idError: true}
-        // }
-        // else {
-        //   errs = {...errs, idError: false}
-        // }
+        if (!isNumeric(info.national_id)) {
+          errs = {...errs, idError: true}
+        }
+        else {
+          errs = {...errs, idError: false}
+        }
       break;
     }
 

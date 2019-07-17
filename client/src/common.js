@@ -60,6 +60,7 @@ export const education = [
 ]
 
 export const days = [
+  {text: '', value: ''},
   {text: '1', value:'1'},
   {text: '2', value:'2'},
   {text: '3', value:'3'},
@@ -93,6 +94,7 @@ export const days = [
   {text:'31', value:'31'}
 ]
   export const months = [
+    {text: '', value: ''},
     {text:'January',value: 'January'},
     {text:'February', value: 'February'},
     {text:'March', value:'March'},
