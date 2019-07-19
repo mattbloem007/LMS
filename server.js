@@ -668,7 +668,7 @@ app.post('/api/deleteBatchLearners', (req, res) => {
       ids.push(jsondata[i].id)
       batch.push(jsondata[i].batch)
     }
-      console.log(ids, batch)
+      console.log(ids, batch);
     connection.query('DELETE FROM `lms_learner_batch` WHERE `learner_ID` IN (?) AND `batch_no` IN (?)', [ids, batch], function(err, rows, fields) {
 
       if (err) throw err;
