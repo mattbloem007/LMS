@@ -673,7 +673,9 @@ app.post('/api/deleteBatchLearners', (req, res) => {
 
       if (err) throw err;
 
+      console.log("sql: " + this.sql);
       console.log('The solution is: ', rows);
+
       res.send({ express: rows });
       connection.release();
     })

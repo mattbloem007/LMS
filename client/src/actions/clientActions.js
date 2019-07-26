@@ -336,6 +336,23 @@ export const validateInput1 = (info, errs) => {
     let facilitators = "";
     let moderators = "";
     let assessors = "";
+    let units = "";
+
+    if (info.us instanceof Array) {
+
+      for (let i = 0; i < info.us.length; i++) {
+        if (i == info.us.length - 1) {
+          units = units + info.us[i]
+        }
+        else {
+          units = units + info.units[i] + ", ";
+
+        }
+      }
+    }
+    else {
+      units = info.us
+    }
 
     if (info.facilitator instanceof Array) {
 
@@ -431,7 +448,7 @@ export const validateInput1 = (info, errs) => {
       assessment_date: assessment_date,
       moderator_date: moderator_date,
       programmeType: info.programmeType.charAt(0).toUpperCase() + info.programmeType.slice(1).toLowerCase(),
-      us: info.us,
+      us: units,
       qp: info.qp,
       sp: info.sp,
       sc: info.sc,
