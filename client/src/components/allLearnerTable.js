@@ -57,6 +57,8 @@ class AllLearnerTable extends Component {
   }
 
   downloadExcel = () => {
+    let learnersArr = [];
+
     let map = {
       national_id: "National ID",
       firstname: "First Name",
@@ -81,7 +83,11 @@ class AllLearnerTable extends Component {
         learners[key] = value
       })
     })
-    this.props.tableActions.downloadExcel(_.omit(this.state.learners, Object.keys(map)))
+
+    let temp = _.omit(this.state.learners, Object.keys(map));
+    learnersArr = Object.keys(temp).map(i => temp[i])
+
+    this.props.tableActions.downloadExcel(learnersArr)
   }
 
   componentWillReceiveProps(props) {

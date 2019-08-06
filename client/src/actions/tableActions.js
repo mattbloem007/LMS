@@ -37,6 +37,7 @@ export function receiveLearners(json) {
 
 export const downloadExcel = (batchs) => {
   return dispatch => {
+    console.log(batchs)
     exportToExcel(batchs)
   }
 }

@@ -67,7 +67,7 @@ export const updateProgramme = (info, latestInfo = {}) => {
       break;
     }
     console.log(latestInfo)
-    dispatch(uploadProgramme(latestInfo))
+    dispatch(uploadProgramme(info, latestInfo))
     return new Promise.resolve()
   }
 }
@@ -78,14 +78,14 @@ export const validateInput1 = (info, errs) => {
   }
 }
 
-export const uploadProgramme = (info) => {
+export const uploadProgramme = (info, latestInfo) => {
   return dispatch => {
     switch(info.programmeType) {
 
       case "Qualification":
       return fetch("/data/lms_qualification",{
            method: 'POST',
-           body: JSON.stringify(info),
+           body: JSON.stringify(latestInfo),
            headers: {"Content-Type": "application/json"}
          })
          .then(function(response){
@@ -98,7 +98,7 @@ export const uploadProgramme = (info) => {
       case "Unit Standard":
       return fetch("/data/lms_us",{
            method: 'POST',
-           body: JSON.stringify(info),
+           body: JSON.stringify(latestInfo),
            headers: {"Content-Type": "application/json"}
          })
          .then(function(response){
@@ -111,7 +111,7 @@ export const uploadProgramme = (info) => {
       case "Skill Programme":
       return fetch("/data/lms_sp",{
            method: 'POST',
-           body: JSON.stringify(info),
+           body: JSON.stringify(latestInfo),
            headers: {"Content-Type": "application/json"}
          })
          .then(function(response){
@@ -124,7 +124,7 @@ export const uploadProgramme = (info) => {
       case "Short Course":
       return fetch("/data/lms_sc",{
            method: 'POST',
-           body: JSON.stringify(info),
+           body: JSON.stringify(latestInfo),
            headers: {"Content-Type": "application/json"}
          })
          .then(function(response){
