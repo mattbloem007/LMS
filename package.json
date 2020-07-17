@@ -20,7 +20,7 @@
     "json-stringify-safe": "^5.0.1",
     "json2xls": "^0.1.2",
     "leftpad": "^0.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "mysql": "^2.15.0",
     "natives": "1.1.6",
     "nodemon": "^1.18.4",
