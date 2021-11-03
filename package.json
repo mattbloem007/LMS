@@ -34,7 +34,7 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.82.2",
     "util": "^0.11.1",
-    "validator": "^10.5.0",
+    "validator": "^13.7.0",
     "xlsx": "^0.14.0"
   },
   "devDependencies": {
